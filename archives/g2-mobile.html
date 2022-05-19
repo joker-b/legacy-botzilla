@@ -1,0 +1,281 @@
+<HTML>
+<HEAD>
+<TITLE>In Development</TITLE>
+
+<STYLE TYPE="text/css">
+	body { font-family: Arial; color: #778; }
+</STYLE>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+<!-- SCRIPT TYPE="text/javascript"src="jquery.js"></SCRIPT> -->
+<SCRIPT TYPE="text/javascript">
+
+var gRActions = new Array();
+$(document).bind('pageinit',function() {
+  // document.write("here goes... "+gRActions.length+" actions.");
+  for (var a=0; a<gRActions.length; a++) {
+	gRActions[a]();
+  }
+});
+</SCRIPT>
+<HEAD>
+<BODY>
+
+<h3 STYLE="color: #ddd;">Development Version, &copy; 2012 K. Bjorke</h3>
+
+
+<canvas id="c789" width="800" height="250"></canvas>
+
+<script type="text/javascript">
+var mX = 400;
+var mY = 100;
+var gNParts = 22;
+gPart = new Array(); // array is faster than object
+
+var gCv = undefined;
+
+var gCount = 0;
+
+var gTitle = "Title";
+var gTStart;
+var gTEnd;
+
+function saturate(v) {
+	var n = Math.min(1.0,v);
+	return Math.max(0.0,n);
+}
+
+function start_title(Text,Len) {
+	// check for overlapping title times?
+	gTitle = Text;
+	gTStart = gCount; // current frame
+	gTEnd = gTStart + (30*Len); // Len in seconds
+}
+
+function draw_title(Ctx,W,H) {
+	if (gCount> gTEnd) return;
+	Ctx.font = "140px Arial Black";
+	var fadeOut = (30*3); // length of fadeout
+	var fadeIn = 30; // length of fadein
+	var eS = gTEnd - fadeOut;
+	var sc = 1.0 - saturate((gCount-eS)/fadeOut);
+	sc *= saturate((gCount-gTStart)/fadeIn);
+	sc = Math.floor(255-20*sc);
+	Ctx.fillStyle = ("rgb("+sc+","+sc+","+sc+");");
+	var met = Ctx.measureText(gTitle);
+	Ctx.fillText(gTitle,(W-met.width)/2,(H+140)/2);
+}
+
+//
+
+function setup_parts(W,H) {
+	var nc;
+	for (var i=0; i<gNParts; i++) {
+	   var x = Math.random()*W;
+	   var y = Math.random()*H;
+	   var dx = 2.0-Math.random()*4.0;
+	   var dy = 2.0-Math.random()*4.0;
+	   gPart.push(new Array(x,y,dx,dy,0,0)); // array faster than object
+	}
+	// document.write("made "+gNParts+" particles.");
+}
+
+function advance(W,H) {
+	for (var i=0; i<gNParts; i++) {
+	   // simple bouncing motion for now
+	   var x = gPart[i][0];
+	   var y = gPart[i][1];
+	   var dx = gPart[i][2];
+	   var dy = gPart[i][3];
+	   var vel=dx*dx+dy*dy; 
+	   if (vel > 50) {
+		dx *= 0.99;
+		dy *= 0.99;
+	   }
+		var ddx = (x-mX)/5;
+		var ddy = (y-mY)/5;
+		var s = ddx*ddx+ddy*ddy;
+		var n = Math.sqrt(s);
+		ddx /= n;
+		ddy /= n;
+		dx += ddx/s;
+		dy += ddy/s;
+	   var newV=dx*dx+dy*dy; 
+	   x += dx;
+	   y += dy;
+	   if (x<0) {
+		x = -x;
+		dx = -dx;
+	   } else if (x>W) {
+		x = 2*W-x;
+		dx = -dx;
+	   }
+	   if (y<0) {
+		y = -y;
+		dy = -dy;
+	   } else if (y>H) {
+		y = 2*H-y;
+		dy = -dy;
+	   }
+	   gPart[i][0] = x;
+	   gPart[i][1] = y;
+	   gPart[i][2] = dx;
+	   gPart[i][3] = dy;
+	   gPart[i][4] = newV-vel;
+	   gPart[i][5] = newV;
+	   // return new Array(x,y,dx,dy,(newV-vel),newV);
+   }
+}
+
+//
+
+// returns scaled total acceleration
+function draw_dots(Ctx) {
+	var totalAcc = 0;
+	var i, pr, pg, vel, sc;
+	for (i=0; i<gNParts; i++) {
+		acc = 2200 * gPart[i][4];
+		totalAcc += acc;
+		pr = Math.floor(Math.min(255-Math.max(0,-acc),255));
+		pg = Math.floor(Math.min(255-Math.max(0,acc),255));
+		vel = gPart[i][5];
+		sc = Math.floor(20+180*(1.0-Math.min(vel,1.0)));
+		Ctx.strokeStyle = ("rgba("+sc+","+sc+","+sc+",.5);");
+		Ctx.fillStyle = ("rgba("+pr+","+pg+","+pr+",.5);");
+		Ctx.beginPath();
+		Ctx.arc(gPart[i][0],gPart[i][1],3.0,0,6.2831,false);
+		Ctx.fill();
+		Ctx.stroke();
+	}
+	return totalAcc;
+}
+
+function draw_bars(Ctx) {
+	// var tVel = 0.0;
+	// var mxv = 0;
+	// var mnv = 1000.0;
+	var acc, pr, pg;
+	// Ctx.strokeStyle = "rgba(200,200,200,.5);";
+	for (i=0; i<gNParts; i++) {
+		acc = 2200 * gPart[i][4];
+		pr = Math.floor(Math.min(200-Math.max(0,-acc),200));
+		pg = Math.floor(Math.min(200-Math.max(0,acc),200));
+		vel = gPart[i][5];
+		Ctx.strokeStyle = ("rgba("+pr+","+pg+","+pr+",.5);");
+		// mxv = Math.max(vel,mxv);
+		// mnv = Math.min(vel,mnv);
+		// tVel += vel;
+		Ctx.beginPath();
+		Ctx.moveTo(10,20+5*i);
+		Ctx.lineTo(10+vel*6,20+5*i);
+		Ctx.stroke();
+		//Ctx.fillText("v "+vel,200,20+i*10);
+	}
+}
+
+function draw_connects(Ctx) {
+	var i, j;
+	// connector lines
+	for (i=0; i<(gNParts-1); i++) {
+		for (j=i+1; j<gNParts; j++) {
+			var dx = gPart[i][0] - gPart[j][0];
+			var dy = gPart[i][1] - gPart[j][1];
+			var nsq = dx*dx + dy*dy;
+			if (nsq<4000) {
+				var v = (nsq-500)/3500;
+				v = 200+Math.floor(v*55);
+				Ctx.strokeStyle = "rgb("+v+","+v+","+v+");";
+				Ctx.beginPath();
+				Ctx.moveTo(gPart[i][0],gPart[i][1]);
+				Ctx.lineTo(gPart[j][0],gPart[j][1]);
+				Ctx.stroke();
+			}
+		}
+	}
+}
+
+function draw_cursor(Ctx,TAcc) {
+	// cursor
+	pr = Math.floor(Math.max(128-Math.max(0,-TAcc),0));
+	pg = Math.floor(Math.max(128-Math.max(0,TAcc),0));
+	Ctx.strokeStyle = ("rgba("+pr+","+pg+","+pr+",.5);");
+	Ctx.beginPath();
+	Ctx.moveTo(mX,mY-4);
+	Ctx.lineTo(mX,mY+4);
+	Ctx.stroke();
+	Ctx.beginPath();
+	Ctx.moveTo(mX-4,mY);
+	Ctx.lineTo(mX+4,mY);
+	Ctx.stroke();
+}
+
+function draw_canv() {
+	if (gCv == undefined)
+		gCv = document.getElementById('c789');
+		if (gCv.getContext) {
+			var ctx = gCv.getContext('2d');
+			var w = gCv.width;
+			var h = gCv.height;
+			var i, j, acc, vel, pr, pg, sc;
+			// bar graph
+			// title
+			// ctx.fillStyle = "rgb(90,10,0);";
+			ctx.fillStyle = "rgba(255,255,255,0.5);";
+			ctx.fillRect(0,0,w,h);
+			ctx.fillStyle = "rgb(0,0,0);";
+			// ctx.fillText("frame "+gCount,20,20);
+			gCount += 1;
+			if (gPart.length < 1) {
+				start_title("Rev 5/16",8);
+				setup_parts(w,h);
+			}
+			draw_title(ctx,w,h);
+			ctx.lineWidth=1.0;
+			draw_bars(ctx);
+			var tAcc = draw_dots(ctx);
+			ctx.fillStyle = "rgb(0,0,0);";
+			draw_cursor(ctx,tAcc/2.0);
+			draw_connects(ctx);
+			// next...
+			advance(w,h);
+		}
+}
+// $(document).ready(function() {
+gRActions.push(function() {
+    draw_canv();
+	$("#c789").mousemove(function(e) {
+	    mX = e.pageX-this.offsetLeft;
+	    mY = e.pageY-this.offsetTop;
+	});
+	$("#c789").mouseleave(function(e) {
+	    mX = -1000.0;
+	    mY = -1000.0;
+	});
+    setInterval(draw_canv,30);
+});
+</script>
+
+<P>Now using jquery-mobile for tablet interactions.</P>
+
+<P>To-do items:</p>
+<UL>
+	<LI>Better Color</LI>
+	<LI>Better Interaction on tablets ('touch' events, resize, rotate screen)</LI>
+	<LI>Bar graph to go away? or expand to show total speed and accelaration?</LI>
+	<LI>exp()-based slowing for highest-seed particle runaways</LI>
+	<LI>Saving user sessions (sharing? leaderboard for those who like such a thing (time-to-calm)?)</LI>
+	<LI>Should links/triangles be more than decorative?</LI>
+	<LI>Bring in dots gradually. Add more or take away some to adjust for user</LI>
+	<LI>SVG version for some phones? (distant goal)</LI>
+	<LI>Sound (in response to action? as indicator of overall state? as reward for 'stages'?)</LI>
+	<LI>Titles of varying sizes. Fonts on mobile may be different!</LI>
+</UL>
+<P>Reminder to myself: Avoid adding features that distract!</p>
+
+<!-- <IMG SRC="/photo/journal//may03e-15.jpg" STYLE="display: none;" /> -->
+
+<h3>KB</h3>
+
+</BODY>
+</HTML>

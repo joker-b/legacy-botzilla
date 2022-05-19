@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <html lang="en">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>February 2007: PhotoRant+</title>
+
+  <link rel="stylesheet" href="http://www.botzilla.com/blog/styles-site.css" type="text/css" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.botzilla.com/blog/index.rdf" />
+
+  <script language="javascript" type="text/javascript" src="/jquery.js"></script>
+  <!-- bootstrap 3.2.0 added sept 2014 -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <!-- end bootstrap CDN call -->
+
+  <script type="text/javascript" language="javascript">
+    var botz = {
+      HOST: 'www.botzilla.com',
+      commentCount: {},
+    };
+  </script>
+  <script src="http://www.botzilla.com/blog/photorant.js"></script>
+
+
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-4450500-3, 'botzilla.com');
+    ga('send', 'pageview');
+
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+  <div id="banner">
+    <div class="bannerBox">
+      <a href="http://www.botzilla.com/blog/">PhotoRant+</a>
+    </div>
+    <h1>Time Goes By: February 2007</h1>
+  </div>
+
+  <div id="archContent">
+
+  <!-- ENTRIES LOOP STARTS -->
+
+  <div class="row">
+  <div class="col-md-9 blog">
+          
+      <!--       <h2 class="date">February 28, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000576"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000576.html">Nub is in the Details</a></h1>
+        <p>This is a little game development (or general graphics) tip that I've been thinking about for the past couple of nights, with additional applications for photographic and other images.</p>
+
+<p>It's really a simple observation, followed by some implementation tricks. The dumb observation is that people like noisy pictures. This has been well known, of course, in famous older papers like Rob Cook's 1985/86 paper <a href="http://graphics.pixar.com/StochasticSampling/paper.pdf">Stochastic Sampling in Computer Graphics (PDF).</a> And for many years photographers have been keen on using grain as a means to elicit a sense of sharpness that may be actually greater than what's really in the picture. This isn't really news, but in playing with noise I've found a really simple trick or two that have pretty broad uses.</p>
+
+<p>First, we're going to make a texture.</p>
+
+<p>&bull; Start up Photoshop, and create a new image that's twice as wide as it is high &#151; preferably both values will be powers of two. In this example, I'll use 512 by 256, RGB.</p>
+
+<p>&bull; Set the foreground color to middle gray (128/128/128 or #808080), select-all, then shift-F5 to get the fill dialog and fill with the Foreground color at 100%. You image is now gray.</p>
+
+<p>&bull; Select <i>only</i> the red channel by selecting it in the channels palette or hitting ctrl-1 (or cmd-1 on a Mac). You should see a plain gray rectangle and the select-all marching dots are still active.</p>
+
+<p>&bull; Select from the Menu bar: Filter -> Noise -> Add Noise.... and set it to 15% and "Gaussian." (Note that if you squint so the at the image is out-of-focus, and click the "Preview" checkbox on and off, the overall gray value doesn't change).</p>
+
+<p>&bull; Now select the Green channel.</p>
+
+<p>&bull; Apply noise in exactly the same way as before.</p>
+
+<p>&bull; Jump back to RGB display, and you should see something pretty similar to this:</p>
+
+<p><center><img title="512 x 256 with 15% independant gaussian noise in red and green channels" src="http://www.botzilla.com/blog/archives/512noise.jpg" class="img-responsive"  border="0" /></center></p>
+
+<p>&bull; We're going to save this as a DDS texture. You'll need the <a href="http://developer.nvidia.com/object/photoshop_dds_plugins.html">NVIDIA Texture Tools DDS plugin</a> if you haven't got it already (if you are a game artist, you almost surely do).</p>
+
+<p>&bull; When the dialog appears, select the "Use existing <a href="http://en.wikipedia.org/wiki/Mip_map">MIP</a> Maps" option and save.</p>
+
+<p>&bull; Close the window.</p>
+
+<p>&bull; Open the resultant DDS file and click "Load MIP Maps" to see all the data.</p>
+
+<p><center><img alt="noiseMipped.jpg" src="http://www.botzilla.com/blog/pix2007/noiseMipped.jpg" class="img-responsive"  border="0" /></center></p>
+
+<p>What happened? The DDS exporter assumed the right half of the original image was filled with an image pyramid &#151; the data in the black area was thrown away, since it's not used. We now have a MIP data set where all layers of the MIP stack have noise of roughly the same statistical characteristics for each and every level (rather than each level being a scaled-down vesion of the layer above it). </p>
+
+<p>What this means is that if this texture is applied to a 3D model, the on-screen frequency of the noise will tend to be constant, regardless of scaling. The texture mapping hardware will always select a level appropriate to the current pixel's screen size, and that level will always have noise of about the frequency we see here on the screen.</p>
+
+<p>Let's try it out on everyone's favorite teapot:</p>
+
+<p><center><img title="NoiseMip texture mapped onto teapot" src="http://www.botzilla.com/blog/pix2007/noisepots.jpg" class="img-responsive"  border="0" /></center></p>
+
+<p>Whether near or far, you can see that the texture feature size &#151; that is, the <i>on-screen</i> size of the noisy "blobs" &#151; is about the same regardless of whether near or far.</p>
+
+<p>I call this approach "constant frequency noise."</p>
+
+<p>If you're experienced in game shading, you may already suspect why we added noise to the red and green channels, but left the blue channel alone.</p>
+
+<p><center><img title="Noise mips as tangent space normals" src="http://www.botzilla.com/blog/pix2007/noisebumppots.jpg" class="img-responsive"  border="0" /></center></p>
+
+<p>Applying this as a tangent space normal maps, you can see that the nubbly detail maintains its on-scren size regardless of whether the pot is near or far. This is different from typical MIP map behavior (which would degenerate towards a smooth surface &#151; see the example below), and while not "physically correct," gives a better consistent <i>feeling</i> to the nature of the rough but shiny material, regardless of rotation, scaling, or distance.</p>
+
+<p>As long as we've got this noise texture, let's try something else. Here are two teapots, one with a standard color texture and one with our noise-mips added to the texture UV values:</p>
+
+<p><center><img title="texture and texture with noisy UV offsets.jpg" src="http://www.botzilla.com/blog/pix2007/offsetNoise1.jpg" class="img-responsive"  border="0" /></center></p>
+
+<p>In areas where textures are greatly over-extended, this method can be used as a variation of "detail texturing" so that instead of soft linear-interpolated blobs, we get little bits of noise.</p>
+
+<p><img title="Closeup showing stretched texture and detailed offsets to replace aliasing with noise" src="http://www.botzilla.com/blog/pix2007/CloseupOffset.jpg" class="img-responsive" border="0" /></p>
+
+<p>Of course, in this application we <i>don't</i> want to offset the texture too much when we're not super-close, so rather than using constant-frequency noise, we can just make a square texture, rather than a rectangular one, and let the DDS exporter "Generate MIP maps" insteead &#151; the lower maps will smooth to a center, zero value, so that at a distance there's no visible offset.</p>
+
+<p>Here's an example. As you can see, it's identical at the largeest MIP but smooths quickly to middle gray at the smaller sizes. In this case, where we are using the channels as signed values, middle gray equals zero: no offset, no bump.</p>
+
+<p><center><img title="Noise texture the usual way: sclaing-down the top level" src="http://www.botzilla.com/blog/archives/noiseMipped2.jpg" class="img-responsive"  border="0" /></center></p>
+
+<p>The noise-offset-as-faux-detail technique can be applied to still pictures, too. In Photoshop, you may be familiar with the idea of using the "add noise" filter to cover-up the defects of a picture that's out of focus or enlarged too much.</p>
+
+<p>Let's take the thumbnail of <a href="http://www.botzilla.com/photo/Sampler/5RT.html">this photo</a> as a sample. If we blow up the thumbnail, it looks pretty soft (especially if using bilinear filtering, which is typical for realtime applications like games).</p>
+
+<p>But if we "add noise" (here quite a lot &#151; the same amount we used when creating the noise texture), the effect is "Grainy" rather than "Muddy," as we can see in these side-by-side views:</p>
+
+<p><img title="Adding noise to an inflated thumbnail" src="http://www.botzilla.com/blog/pix2007/AddNoise.jpg" class="img-responsive"  border="0" /></p>
+
+<p>Alternatively, we can apply the same noise pattern offset method we used for 3D detail texturing to the 2D image.</p>
+
+<p>&bull; Make a red/green noise pattern as before, but the same image size as our soft enlarged image. Save if as a .PSD file &#151; say, "imgOffsets.psd."</p>
+
+<p>&bull; Then go back to the soft enlargement, select "Filter->Distort->Displace..." In this example, the scale was set to 4, the wrap mode was on, and no stretching (since the images were the same size). When the file dialog appears, select our just-created "imgOffsets.psd" as the offset sourcefile.</p>
+
+<p><img title="Adding noisy pixel offsets to an inflated thumbnail" src="http://www.botzilla.com/blog/pix2007/AddNoiseOffset.jpg" class="img-responsive"  border="0" /></p>
+
+<p>This version creates an illusion of small detail even though there is none &#151; and without altering the colors directly. Some of the obviously-aliased details, such as the highlight on the lower lip, really look far better this way.</p>
+
+<p>Both approaches can be combined &#151; offsets and also a smaller bit of color noise to enhance the apparent sharpness. Another option might be to make the offset image a smaller size and then stretch it in the offset filter, so that the "clumps" are larger than single pixels.</p>
+
+<p>Understanding these uses of noise can extend well beyond Photoshop. An obvious application that would join together these techniques would be better, more sophisticted video scaling performed in real time on a GPU.</p>
+
+<p>Here's a last combined-noise version with clumpy offsets, followed by a sharp version (the thumbnail was a scaled-down version of this) for comparison.</p>
+
+<p><center><img alt="both luminance and clumping noise" src="http://www.botzilla.com/blog/pix2007/both.jpg" class="img-responsive"  border="0" /></center></p>
+
+<p><center><img alt="image based on original slide" src="http://www.botzilla.com/photo/Sampler/5RT.jpg" class="img-responsive"  border="0" /></center></p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000576.html">February 28, 2007</a>
+        	<span id="cmts_000576">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=576" onclick="OpenComments(this.href); return false">Comments (0)</a></span>
+            <script>
+            botz.commentCount['cmts_000576'] = 0;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000576.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 27, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000575"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000575.html">The PhotoRant School of Film Photography</a></h1>
+        <table cellpadding=9 bgcolor="#eeeeee" border=2><tr><td><h2><img title="Tri-X (C)2005-2007 K Bjorke" src="http://www.botzilla.com/blog/pix2007/dec05d-11.jpg" width="337" height="500" border="0" align="right" hspace=8 vspace=6 />Starting with Film:<br><font size="-1">A Barebones Primer for Digital Shooters</font></h2>
+
+<p><i>True Story:</i></p>
+
+<p>My celphone rings, I answer. The voice on the other end asks me: <i>"I forget again, is a <i>higher</i> f-stop number for higher shutter speeds, or is it higher shutter speeds for higher f-stops?"</i></p>
+
+<p>This isn't a call from a dummy, it's from a good, younger, photographer whose work has been done almost exclusively with automated equipment &#151; mostly digital &#151; and she's trying to shoot manually using my hardy old Canon Elan 7E.</p>
+
+<p><i>"Think of them as balancing each other." I say, " higher shutter speed, lower f-stop. If you go for a lower shutter speed you get a higher f-stop. One goes up, the other goes down. Balance."</i></p>
+
+<p><i>"I can never remember that."</i></p>
+
+<p><i>"The camera can show you, too. Just put it in 'P' mode for a second, and tell me what the exposure says."</i></p>
+
+<p><i>"Umm, 125 and 5.6"</i></p>
+
+<p><i>"Okay, now while you're looking through the finder, turn the little wheel next to the shutter release &#151; the one in front &#151; back and forth."</i></p>
+
+<p><i>"Oh, okay &#151; hey that's weird. Now it's 60 and 8."</i></p>
+
+<p><i>"That's right: lower shutter, higher f-stop. The overall amount of light is the same, but the way the camera reads it changes. A smaller lens opening, but open for twice as long..."</i></p>
+
+<p><i>"Uh, yeah, whatever. Okay, bye" <b>*click*</b></i></p></td></tr></table>
+<p>&nbsp;</p>
+
+<h2>Film for Digital Shooters, in Five Minutes or Less</h2>
+
+<p>For <a href="http://www.apug.org/forums/search.php?searchid=2155107&action=getnew">whatever </a> reason, occasionally photographers raised on digital want to try out the Old School Wet Stuff: film. So this entry is dedicated to help them get going. It assumes you already have some clue about how to use your digital camera, but you may never have been around a film camera. Ever.</p>
+
+<p>I won't go on about <i>why</i> you might want to shoot on film. There are <a href="http://www.botzilla.com/photo/g1film.html">lots</a> of possibilities, including the ability to get great, quiet, durable and lightweight  equipment cheaply; simple curiosity; your uncle gave you his old camera; you feel a need to master the craft; you love the way it looks; you've realized that even today almost <i>all</i> high-end fine art photographers shoot film; you're a nostalgia freak. Whatever. All good enough reasons. Rather, this page is designed to help you get started ASAP.</p>
+
+<h2>Camera</h2>
+
+<p>Film comes in varying sizes Bigger film gives more detail but costs more and needs a larger camera. The most common film is 35mm film, found at drugstores and supermarkets everywhere, and that's what this page will focus on.</p>
+
+<p>If you want to shoot 35mm, then your camera choices are excellent and very inexpensive these days because of the huge number of cameras sold over the years. The newest of 35mm SLRs can be had for a song (I bought my last mint Canon Elan 7E for $80 &#151; even <i>new</i> 35mm SLRs are surprisingly inexpensive) and functionally, they're extremely similar to digital SLRs (that Elan and my 5D are surprisingly alike, right down to the placement of all major buttons). If you're not just borrowing your uncle's old Pentax, look at Craigslist or somewhere similar, you don't need to spend a fortune to get a <i>fantastic</i> camera.</p>
+
+<p>Pretty much any camera made by any of the big makers will be very capable: <a href="http://www.canon.com/camera-museum/camera/f_camera.html">Canon</a>, <a href="http://www.photoethnography.com/ClassicCameras/index-frameset.html?AsahiPentaxK1000.html~mainFrame">Pentax</a>, <a href="http://www.mir.com.my/rb/photography/hardwares/classics/nikonfmseries/fm/index.htm">Nikon</a>, <a href="http://www.mir.com.my/rb/photography/hardwares/classics/contax/index.htm">Contax</a>, <a href="http://en.wikipedia.org/wiki/Olympus_OM-1">Olympus</a>, <a href="http://www.camerapedia.org/wiki/Minolta_Dynax_600si">Minolta</a>... If you have a DSLR, you might want to buy into the same system. But they're all pretty decent.</p>
+
+<p>You might be delighted to realize that a 35mm SLR is almost always a lot lighter than a digital. Count it as a bonus: no big batteries or circuitry to lunk around.</p>
+
+<h2>Film</h2>
+
+<p><a href="http://www.botzilla.com/blog/archives/cat_grayscale.html">B&W</a> or color? Slide or print? In general, if you are shooting color film then slides will give you the Biggest Color, though they will be more expensive and take longer at most labs. B&W film is a favorite both for its unique look and because, if you have a mind to, it's the easiest and cheapest to process (and potentially print) by yourself.</p>
+
+<p>Most drugstores sell rolls of film with 24 exposures to the roll. Some will sell 36-exposure varieties. I recommend the latter, it's cheaper (per-picture) and you won't hit the end of a roll as often.</p>
+
+<p>Some film photographers (even pros) advocate buying whatever film is cheapest. If you make the mistake of asking on photo.net, you'll also find plenty of people who are super picky about exactly which brand of film does what. A good idea is to pick <i>ONE</i> film and stick with it, at least for a few rolls. Buy the same kind each time and then you'll be on your way to ensuring that your results are predictable. Some people like to buy lots of kinds and try everything. YMMV, but I think that's a lot of wasted effort.</p>
+
+<p>Film has one ISO setting for the entire roll. It's set at the factory. Kodak "Tri-X" is ISO 400 and that's the speed you get for every shot (assuming you don't do anything weird in the developing). This can throw some digital photographers, who are used to changing the ISO in different lighting conditions. Not so with film! When you go outside or come inside, you don't change the ISO. You have one ISO, and you need to adjust the exposure setting to deal with that fact.
+
+This fact is why I recommend <a href="http://www.kodak.com/global/en/professional/products/films/bw/triX.jhtml?id=0.3.8.20.8&lc=en">Kodak Tri-X</a> (or the equivalent <a href="http://www.ilfordphoto.com/products/product.asp?n=7&t=Consumer+%26+Professional+Films">Ilford HP5+</a> or <a href="http://www.fujifilmusa.com/JSP/fuji/epartners/proPhotoProductsNeopan.jsp#Neopan_400">Fuji Neopan 400 (called "Presto" in Japan)</a>) because they are ISO 400 which is a pretty good all-around ISO for both in and out (follow the links to see what the packages look like, if you're unsure).</p>
+
+<p><i>If you know you won't process it yourself:</i> Kodak and Ilford make B&W films specifically for processing at drugstore one-hour labs. <a href="http://www.kodak.com/eknec/PageQuerier.jhtml?pq-path=2/3/9/7010/6994/1094&pq-locale=en_US">Kodak B&W, aka 'BW400CN"</a> and <a href="http://www.ilfordphoto.com/products/product.asp?n=11&t=Consumer+%26+Professional+Films">Ilford XP2</a> are identical to Tri-X and HP5+, in terms of basic exposure and so forth. Unlike those other films, you can get these two processed at the corner &#151; they're actually color films with the color desaturated so that they make a B&W picture. "Traditional," Tri-X-style films use different chemicals that the corner drugstore won't have &#151; those films will most likely have to be sent out, will take a week, and will cost more.</p>
+
+<p>All of the kinds of film mentioned so far are black and white. If you want to shoot color, be aware that there is no auto white balance for film. The white balance of the entire roll, like the ISO, will be the same, and it will almost surely be daylight balance. Shooting in black and white avoids this initial pitfall.</p>
+
+<p>Loading film into the camera is usually pretty simple. When you get your camera, have a roll of film with you and ask the seller or loaner to show you how it's done. Some cameras will do it automatically, others require you to thread the film onto a little plastic spool and wind the lever with your thumb. Do it once & you're unlikely to ever forget.</p>
+
+<p>When you load the film, be sure to set the ISO on the camera! Some cameras can do this automatically but many cannnot. If you shoot a roll of ISO 400 film with the camera set to ISO 100, all your photos will be blown-out over-exposures. Likewise if you go the other way, your photos will be dark masses of under-exposure.</p>
+
+<h2>Exposure</h2>
+
+<p>If you are using a newer camera, chances are that the exposure is just as automated as on your digital camera. Just set to "P" or "Av" etc and <a href="#click">get on with shooting.</a> No surprises here.</p>
+
+<p>You can also set things manually. The shuftter speeds on older cameras are usually on the body, and the f-stops will be set by a ring on the lens itself. For newer SLRs like Canon EOS, the camera body will set both (just like the DSLRs). A few cameras (like older Canons or Contaxes) will also have a f-stop marked "A" which allows the camera to be used in auto-exposure mode. The lens may have a little safety button to keep you from inadvertently switching in and out of "A" &#151; just press it while twisting the ring.</p>
+
+<p>All but the very oldest SLRs have meters. Sometimes the batteries are hard to find. If your meter is good, <a href="#click">skip forward.</a> If your camera is older, or you want to be more self-reliant, use the manual settings and remember, first and foremost, the <i>Sunny 16 rule:</i></p>
+
+<dl><dt>The Sunny 16 Rule</dt><dd>For any given ISO, on a sunny day, set the shutter speed to the number closest to that ISO, and the f-stop to f/16.</dd><dt>Extra:</dt><dd>On cloudy days, open two stops to f/8. For people and objects in "hard" shade on a sunny day, go down to f/5.6</dd></dl>
+
+<p>As mentioned above, the shutter/f-stop combinations can be rearranged by balancing increase in one with decrease in the other &#151; 1/500 at f/16 can be adjusted easily, say, to 1/1000 at f/11 (one click for most shutters and most lenses), or 1/250 at f22 (likewise) &#151; all will deliver the same <i>total</i> amount of light to the film.</p>
+
+<p>The cool thing about Sunny 16 is that <i>you don't need a light meter.</i> This actually works great for digital cameras, too. Camera companies put the light meter in to make sure people don't entirely screw up, but it's not necessary.</p>
+
+<p>In fact, if you look inside the box of many film rolls (or sometimes on the outside of the box), those expsoures are printed right there.</p>
+
+<p>Here's a little table. Indoor lighting varies, sunshine is always the same. And if you're always shooting in the <i>same</i> indoor location (say, at home), the exposure will always be the same, too. There are really <i>only two key values to more-or-less remember:</i> Sunny-16 (and open up for shade and clouds) and a genral "interior" value (offices and commercial lighting will be a bit brighter than that). Works for me, anyway.</p>
+
+<center><table border=0 cellspacing=0 cellpadding=2>
+<tr bgcolor="#eeeeee"><td colspan=3 align="center"><b>Typical for ISO 400 films</td></tr>
+<tr><td valign="bottom"><i>Condition</i></td>
+   <td align="center" valign="bottom" bgcolor="#f8f8f8"><i>Shutter<br>Speed</i></td>
+   <td align="right" valign="bottom"><i>f-stop</i></td></tr>
+<tr><td bgcolor="#f8f8f8"><b>Outside on a Sunny Day</b></td>
+   <td align="center""><b>500</b></td>
+   <td align="right" bgcolor="#f8f8f8"><b>16</b></td></tr>
+<tr><td bgcolor="#f8f8f8">In the shade on a Sunny Day</td>
+   <td align="center">250</td>
+   <td align="right" bgcolor="#f8f8f8">8</td></tr>
+<tr><td bgcolor="#f8f8f8">Cloudy Day, no Shadows</td>
+   <td align="center">250</td>
+   <td align="right" bgcolor="#f8f8f8">11</td></tr>
+<tr><td bgcolor="#f8f8f8">Heavy Overcast Day</td>
+   <td align="center">250</td>
+   <td align="right" bgcolor="#f8f8f8">8</td></tr>
+<tr><td bgcolor="#f8f8f8"><b>Indoors, Most Homes</b></td>
+   <td align="center"><b>30</b></td>
+   <td align="right" bgcolor="#f8f8f8"><b>2.8</b></td></tr>
+<tr><td bgcolor="#f8f8f8">Indoors, Typical Office</td>
+    <td align="center">60</td>
+    <td align="right" bgcolor="#f8f8f8">2.8</td></tr>
+<tr><td bgcolor="#f8f8f8">Onstage, Rock Show</td>
+     <td align="center"><font color="#800000">125</font></td>
+     <td align="right" bgcolor="#f8f8f8">2.8</td></tr>
+</table></center>
+
+<h2><a href="#click">Click!</a></h2>
+
+<p>Got the idea? Go ahead and shoot your film!</p>
+
+<p><i>When you reach the end of the roll:</i> the exposed film needs to be wound back inside the little can. Some cameras will do this automatically. Others, of the hand-wound variety, need to have the film cranked-back by hand. There will be a little winder on one side of the camera, and a button to press (usually on the bottom of the camera) that will release the internal film gears so that you can rewind it into the can. Once the button is pressed the rewind crank will turn smoothly. <i>Never force.</i> If it's not turning easily, then there must be something awry. Check with someone who knows, rather than either tearing your film or worse, accidentally opening the camera without the film being rewound safely back into the can (an event which will destroy ALL your pictures from the roll). <i>Never open the camera back until you're done rewinding!</i></p>
+
+<p>When fully rewound, that little "tongue" of film that was showing when you first got the film will also be rewound into the can. This is as it should be. Unexposed rolls have a bit of film sticking out, but exposed ones do not.</p>
+
+<p>For more on exposure than is humanly sensible to know, check out <a href="http://en.wikipedia.org/wiki/Exposure_value">Wikipedia.</a></p>
+
+<h2>Processing</h2>
+
+<p>Once your film is safely rewound you can take the can out and have it processed.</p>
+
+<p>If you want to do it yourself, I suggest looking at some tutorial sites like <a href="http://www.rogerandfrances.com/">Roger & Frances</a> or <a href="http://www.bw-photography.net/">bw-photography.</a> Processing B&W yourself is a satisfying passtime, it's <i>lots</i> cheaper than using a lab, and ulitimately it can give you more flexibility. You also need a little special equipment, some chemicals from the camera store, and a lot of patience with tiny specks of dust.</p>
+
+<p>The lab is usually quick, clean, and very dependable. You may want to let them do your first rolls even if you plan to build a darkroom (you don't have to build a darkroom if you just want to process the film but print on computer, BTW -- you can do everything dark in a special black cloth bag, and process the film in your kitchen. But that's a whole extra web page).</p>
+
+<p>If you shoot color prints, the average lab will most-likely auto-correct all the color for you at printing time. Modern print machines are actually elaborate scanners and printers attached to a hidden computer. They apply their own version of automatic white balance, and it can look very good. This automation helps two people: you, the photographer, and also the person at the drugstore who runs the machine, who probably knows a lot less about photography than you already do.</p>
+
+<p>(If you want only the negatives (say, you have access to a film scanner), the turnaround can be faster than one-hour. Since there's no printing, your film can be ready in about 20 minutes and usually for a lot less than printing would cost.)</p>
+
+<p>Your prints will be returned along with the negatives. Keep the negatives clean and dry, they scratch easily. You may notice that the pictures in your prints are slightly cropped-in from the negatives. This is typical for drugstore labs. If you go to a camera-store or pro lab, they'll crop or not crop any way you like to any size you please. They'll charge you, of course.</p>
+
+<p>That's it! You've shot your first roll. Ready for another?</p>
+
+<h3>Postscript</h3>
+
+<p>There are a few topics not touched at all here. Like shooting 120-format film (in a Holga, say, or a Rollei), SLR versus Rangefinder, large format view cameras, etc. Fortunately, <a href="http://www.apug.org/">all film cameras</a> work in very similar ways. Start with 35mm and you'll quickly figure out anything else that might come along.</p>
+
+<p><b>Follow-on Links:</b> <i>Want more info? Try the <a href="http://www.mediajoy.com/en/cla_came/index.html">MediaJoy classic camera site</a> for more photos of film cameras and their usage, and the <a href="http://www.camerahobby.com/EBook-TOC.htm">Edwin Leong's CameraHobby</a> for a more comprehensive film-camera photo course.</i></p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000575.html">February 27, 2007</a>
+        	<span id="cmts_000575">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=575" onclick="OpenComments(this.href); return false">Comments (1)</a></span>
+            <script>
+            botz.commentCount['cmts_000575'] = 1;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000575.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 26, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000573"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000573.html">Five</a></h1>
+        <p><img title=(C)2007 K Bjorke" src="http://www.botzilla.com/blog/pix2007/P1060875.jpg" width="807" height="454" border="0" /></p>
+
+<p>I've been reluctant to engage in <a href="http://lostgarden.com/2007/01/game-design-behind-five-things-blog.html">the five things meme</a> &#151; mostly because when I thought about answering it, my mind would transform into clear gelatin, leaving me unable to think of a doggoned thing. And my usual excitement about web memes is surpassed only by the suggestion of a stirring round of <a href="http://en.wikipedia.org/wiki/The_Minister%27s_Cat">the Minister's Cat.</a> Still, <a href="http://todddeutsch.com/blog/?p=33">Todd</a> finally got me going.</p>
+
+<p>I've noticed that most people answer at least some of the questions with anecdotes about their irresponsibly wastrel childhoods. This game <i>is,</i> of course, all about scandal! I guess time gives obscurity (and these days, for those who blog every last dumb thing, what else is there that people don't know already?).  I'll toss out one old and four current. I'll leave out the part about how I used to introduce myself at L.A. parties as "Sven Skarnasdag."</p>
+
+<ol>
+<li><b>I used to be terrified of the numeral 7</b> and would avoid arithmetic problems like "17+2=__" unless protected from the 7 by a friendly 3 or (better) 5. Regardless, I ended up <i>eventually</i> doing well in math & testing out of my college math requirements, though it made no difference as I went to art school (either did my placement as a National Merit Scholar). Oddly, I now work in a <a href="http://developer.nvidia.com/">highly-mathematical field.</a> Jacobian determinants, anyone?</li>
+
+<li><b>I lost over forty pounds two years ago.</b> I gained about ten back during the last year because I kept thinking "well, just this <i>one</i> slice of cake..." <a href="http://www.botzilla.com/blog/archives/000464.html">Lesson learned.</a> Currently, I'm going down again & still wear those jeans.</li>
+
+<li><b>My mom reads my blog.</b> But my <a href="http://thebekkaffect.com/">daughter</a> does not (much).</li>
+
+<li><b>I haven't shot any new <a href="htttp://www.apug.org/">film</a> since the second week of December.</b> Plenty of pictures, but none on film. It's such a PITA to travel with film these days. I've been <i>buying</i> a fair bit of film. The Contax and Bronica have recently been reloaded. Hmmm, wonder what I'm up to....</li>
+
+<li><b>I dunno but <a href="http://www.time.com/time/magazine/article/0,9171,855728-1,00.html">Alaska.</a></b> I've been in all the other 49 states, and yet not Alaska, despite having an uncle there.</li>
+
+</ol>
+
+<p>As for the nominating end-game:<ul><li><a href="http://blogs.nvidia.com/developers/">Roy Taylor</a></li><li><a href="http://2point8.whileseated.org/">2point8</a></li><li><a href="http://www.3pointd.com/">3pointD</a></li><li><a href="http://www.gaspweb.co.uk/plog">Gary</a></li><li><a href="http://www.unicircuits.com/">Dirk</a></li></ul>will all keep any curious reader busy, even if they've been tagged before.</p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000573.html">February 26, 2007</a>
+        	<span id="cmts_000573">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=573" onclick="OpenComments(this.href); return false">Comments (1)</a></span>
+            <script>
+            botz.commentCount['cmts_000573'] = 1;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000573.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 25, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000570"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000570.html">Is Photography Inherently Humanizing? (II)</a></h1>
+        <p><img src="/blog/pix2007/Aug03r-08.jpg" align="right" title="Closed railway gate into North Korea, (C)2003 K Bjorke" hspace=12 vspace=6 ><b>Part 2</b> (<a href="http://www.botzilla.com/blog/archives/000565.html">Part I here</a>)</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Marc_Hauser">Marc Hauser</a> is a professor at Harvard's Deptartment of Cognitive Evolution (a fully different person from <a href="http://www.modamag.com/marc.htm">photographer Marc Hauser</a>), and his recent book <cite>Moral Minds</cite> is chock full of <a href="http://moral.wjh.harvard.edu/">morality tests.</a> These tests take the form of little thought experiments, similar to those math "word problems" of trains leaving Chicago and Philadelpha at the same time at such-and-such a speed. Unlike the meeting of two fixed-speed trains, however, these problems don't have fixed answers &#151; rather, they are presented as a means for the person taking the test to shine some light into the internal nature of their own moral sense.</p>
+
+<blockquote><i>Standing on a footbridge spanning the railroad tracks, Frank sees an empty, out-of-control boxcar about to hit five people. Frank's leg is stuck in the railing, but next to Frank is one person who he can push, causing the one person to fall off the footbridge and onto the main track where he will be hit by the boxcar. The boxcar will slow down because of the one person, therefore preventing the five from being hit....</i></blockquote>
+
+<p>The accumulated responses to these questions about fictional Franks, Roberts, Donnas and so forth, answered repeatedly by many different people with widely varying backgrounds, have come to reveal certain broad truths held in common by people everywhere &#151; that is, a common core of human moral response.</p>
+
+<p>In this snippet above we can already discern varying forces: there is the moral weight of saving five lives versus one, but also the moral weight we ascribe to the means toward that end: if Frank pushes the other person, is that different from, say, Frank diverting the boxcar to a side railing, saving the five but striking someone on that other track? And beyond the stated scenario (such tests caution the reader not to invent additional details, but make decisions <i>for purposes of the test</i> based upon the scenario alone), variations come quickly to the imagination: What if Frank only discovered that fatal ramifications for the one <i>after</i> he'd pulled the lever that saves the five? What if the one, or any of the five, were people known and recognized by Frank? Friends or enemies? Adults or children? What if instead of five it were three, or seven, or some unknown number? What if any of those people wore the uniform of a railroad, and thus could bear some responsibility for the rogue boxcar? What if he <i>heard</i> the voices of a group of people on the track, rather than actually <i>seeing</i> them?</p>
+
+<p>What has been emerging from queries like Hauser's is a picture of underlying human morality, one that has elements that are not driven (to the annoyance of some people) by the various commandments and traditions of any single culture or religion, but apparently by something fundamental about the way that human animals and their brains have been structured by evolution.</p>
+
+<p>Humans have a natural tendency toward actions that we consider morally positive, whether they involve either help or harm, in just as certain and unconscious way as we are naturally inclined to enjoy the taste of a strawberry or the sight of an attractive person. It may be no coincidence that we describe both what is pleasing and what we are morally inclined toward with the same word: "good."</p>
+
+<p>Such research contains several branching questions, such as what parts of cognition are involved in morality, and how did it evolve? What seems clear regardless of those answers about "how," is the certainty of the "what": that there is <i>some</i> moral kernel to humanity, a natural tendency towards human behavior that is as universally present and consistent as is, say, the broad human capacity for language. Humans everywhere may not speak the same language, but they all speak, and basic lingual concepts like nouns and verbs are found everywhere. The sphere of <i>possible</i> languages is consistently-sized the world 'round.</p>
+
+<p>Similarly, all humans share some core concepts of morality, such as the distinctions and interactions between ends and means; the concepts of "right" and "wrong;" the preference of protection of kin; and likewise a preference for immediate aid over remote aid: one is more likely to give a dollar to a stranger needing train fare in their own neighborhood than to a starving family in a remote country.</p>
+
+<p>And here, I think, is where photography re-enters the stage.</p>
+
+<p>Just as proximity is important in choosing who we are likely to help versus those who we are less likely to help, proximity plays a role in managing our ability to harm. For thousands of years it's been known that not only are an army's archers safer from an opponent's battle axes than are the front-line infantrymen, but also: an arrow fired into the distance, alone or as part of a united volley, is an easier thing to loose than it would be to stab the same victims at close range. Not just physically easier, but morally less cumbersome. You don't have to look your victim in the eye. It's even easier, the more remote one becomes&#151; not only for users of the musket, the artillery battery, ICBM or stealth bomber, but most of all for the generals and kings who can observe the progress of destruction through their field goggles or even at their desks while receiving dispatches from the front. One can hide the faces of the doomed behind distance, behind obfuscatory language like "collateral damage," or the comfort of hard-to-grasp and indefinite numbers like 25% or 30,000.</p>
+
+<p>Everything is easier to take if we don't have to <i>see</i> it &#151; even prisoners in firing squads are given blindfolds as a "humane" gesture. And thus Lewis Hine's famous admonition and split goal for photography: to show those things that ought to be seen, and those that must be stopped. Hine, and all the socially-aware photographers before and after, knew it in some way: to <i>see</i> is <i>by itself</i> morally compelling.</p>
+
+<p>In the hundreds of thousands of years before photography, the years in which our moral mechanisms were evolving, one might hear about a distant injustice, but to <i>see</i> it required proximity, and proximity has a hard-to-resist sense of participation. Photography brought that sense of moral connection into the parlor of the even most sheltered households.</p>
+
+<p>War photography, I think, is different from other forms of moralistic photography here, because almost all war photography is horror photography. We can do nothing for <a href="http://www.civil-war.net/cw_images/files/images/537.jpg">Matthew Brady's fallen Confederates,</a> nor can we choose a specific action in response to <a href="http://www.exporevue.com/images/magazine/1097delahaye_taliban.jpg">Luc Delahaye's sprawled and broken Taliban</a>. <a href="http://www.huismarseille.nl/exhibitions/EugeneSmith.jpg">Gene Smith's image</a> of a G.I. holding a baby found in the jungle shocks both by contrast between the soldier and child, and then in horror when we read the matching text. These images sell magazines, they move newspapers, they are immediate and "hard hitting," but do they impell towards action on the part of the viewer? Or are they too spectacular for response?</p>
+
+<p>Smith was adamant in his opinion that every photograph should resonate as a blow against the very nature of war itself:</p>
+
+<blockquote><i>My beliefs, my camera, and some film. These were the weapons of my good intentions. My camera, my intentions, stopped no man from falling, nor did they aid him after he had fallen. It could be said that "photographs be damned, for they bind no wounds." Yet, I reasoned, if my photographs could cause compassionate horror in the viewer, they might also prod the conscience in the viewer into taking action…</i></blockquote>
+
+<blockquote><i>...and each time I pressed the shutter release it was a shouted condemnation hurled with the hope that the pictures might survive through the years, with the hope that they might echo through the minds of men in the future &#151; causing them caution and remembrance and realization.</i></blockquote>
+
+<blockquote><i>Know that these people of the pictures were my family &#151; no matter how often they reflected the tortured features of another race. Accident of birth, accident of place &#151; the bloody, dying child I held momentarily while the life &#151; fluid seeped through my shirt and burned my heart &#151; that child was my child.</i></blockquote>
+
+<p>I can't help but feel that such an enterprise is hobbled by mistakenly trying to tie two urges together as one. I don't think there is truly an such thing as "compassionate horror" &#151; rather there are two simultaneous reactions when faced with the sight of people destroyed by conflict. Compassion pulls people together, but horror pushes apart. No amount of compassion can restore the life of <a href="http://eden.dei.uc.pt/~ernesto/capa_big_pic1.jpg">Capa's Spanish partisan,</a> nor that of the frozen shapes in <a href="http://katardat.org/marxuniv/2002-SUWW2/Images/images03-russia4145/(BALTERMANTS)sorrowstricken.jpg">Baltermant's <i>Sorrow.</i></a> Horror wins.</p>
+
+<p>One thing I've never seen: a photographer who is neutral on the topic of war. There may be some who view it as an inevitability, and many who will not choose sides. But I can't recall hearing of any photographer who seemed really enthusiastic about the <i>purpose</i> of war, any war, after more than a day of covering it.</p>
+
+<p>Perhaps chillingly, one of the inclinations discovered by Hauser and others within the human moral engine is that doing something bad is worse than letting something bad happen. Being a non-particiipant with a camera is, we somehow feel, neutral ground.</p>
+
+<p>If Gene Smith was unable to change the surety of armed conflict, where <i>were</i> his photographs successful?</p>
+
+<p>Where his compassion was unbound, free from horror. As examples, consider his work on <a href="http://blog.larranaga-portfolio.com/smithnurse.jpg">nurse midwife Maude Callen,</a> who clearly inspired tremendous compassion in Smith himself and his <i>Life</i> readership, who felt compelled to help through letters and donations to found a new clinic that survives <a href="http://www.charlestonbusiness.com/pub/12_9/news/6328-1.html">even today.</a></p>
+
+<p>Smith's <a href="http://www.botzilla.com/blog/archives/000491.html">pi&eacute;ta,</a> part of his coverage of the tragic vicitimization of the people of Minimata Japan, images that overcame horror with compassion and led to <a href="http://blogcritics.org/archives/2006/05/12/180705.php">substantial and lasting change.</a></p>
+
+<p>As Hauser has said, he doesn't advocate any specific moral, polical, religious, or social agenda &#151; though he feels that his work impinges strongly on all of those fields. What he <i>does</i> assert is the belief that those policies and actions which most-naturally map onto our foundational moral sensibilities will be those which are most likely to be accepted by the populace, and which are most likely to stick around, without shifting on the winds of fashion. Policies that suit us as the animals we are.</p>
+
+<p>When we see another person, even in a photograph, we feel a connection to them. Hauser's work hints at deep reasons why this is so. When photography's power is used to incite not horror but compassion, that power is at its zenith, and most-capable of expanding our moral circle. It does not seem capable of doing otherwise.</p>
+
+<p>(Part III <a href="http://www.botzilla.com/blog/archives/000599.html">here.</a>)</p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000570.html">February 25, 2007</a>
+        	<span id="cmts_000570">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=570" onclick="OpenComments(this.href); return false">Comments (0)</a></span>
+            <script>
+            botz.commentCount['cmts_000570'] = 0;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000570.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 23, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000572"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000572.html">The 9 Billion Spams</a></h1>
+        <p><img alt="(C)2007 K Bjorke" src="http://www.botzilla.com/blog/pix2007/P1060876.jpg" width="288" height="512" border="0" align="right" hspace=8 vspace=6 /><i>Xenical Xenical<br>Famivir Famivir<br>Ymmbgrx Celexa<br>Tarot Therapy</i></p>
+
+<p>I have been shovelling the spam. Not so much here, but over at <a href="http://www.photopermit.org/">PhotoPermit.Org.</a></p>
+
+<p>The spam comes in multiple flavors. The most common are spurious forum posts; unrelated trackback pings to old, obscure posts from the main news feed; and the creation of fake user accounts, sometimes with and sometimes without a 'home page' link to some often non-existant URL selling levitra and auto insurance ringtones teen grandma+sex of come sort or another.</p>
+
+<p>Some of it &#151; like the 1300 pings that I deleted this morning, including about fifty that had been added to a single year-old news item over the course of twenty minutes &#151; are surely placed there by robots. The robots appear to be increasingly sophisticated, able to recognize and bypass shifting command tag titles, php file names, and handily confirming passwords. </p>
+
+<p>I've been regularly hacking-in counter-measures, adding non-standard features to my local WordPress and phpbb in attemps to thwart the 'bots. And have come to the conclusion that it's not just bots, but also <a href="http://en.wikipedia.org/wiki/Captcha#Human_solvers">live humans</a> who are adding a great deal of the spam.</p>
+
+<p>For even the poorest wage slave in some remote (but wired) corner of the world, how can this be profitable? Who do they expect will come to farm-up the information contained in the user profile of "Y67chick" and follow it to buy videos and warez? Even if in the hopes of having some Google spider raise a page ranking, what's the point of attempting to raise the ranking of a page that's not even there? And for every successful attempt to register a new false user and use that account to post a list of discount office supply links,  how many more attempts fail?</p>
+
+<p>Though the web is large, and the margins narrow: even then, how can anyone expect all this effort to be profitable?</p>
+
+<p>It was when I was deleting pings that it came to me. Deleting them in careful steps, 15 at a time, in a stready ritual and repetitive motion of scroll-down/click 'invert selection'/click 'delete selected'/click 'Okay'... scroll-down/click 'invert selection'/click 'delete selected'/click 'Okay'... scroll-down/click 'invert selection'/click 'delete selected'/click 'Okay'...  as my head swayed rhythmically over the keyboard and my hand twitched predictably at the mouse I  felt at one with the universe of data and the voice of the One True Spam sang clear in my heart. I realized in that moment that <i>spam is not a business proposition.</i> </p>
+
+<p><i>Spam is a form of <a href="http://en.wikipedia.org/wiki/Prayer#Experimental_evaluation_of_prayer">prayer,</a></i> and needs no sensible rationale. Spamming the world is an act of faith, and the realities of the spamming, its effectiveness, its purpose are unneeded details.</p>
+
+<p>We beseech you:</p>
+
+<p><i>Zyrtec Tamiflu<br>Acyclovir Tamiflu<br>Bentyl Tamiflu<br>Visit my site!</i></p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000572.html">February 23, 2007</a>
+        	<span id="cmts_000572">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=572" onclick="OpenComments(this.href); return false">Comments (0)</a></span>
+            <script>
+            botz.commentCount['cmts_000572'] = 0;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000572.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 20, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000568"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000568.html">Traveling</a></h1>
+        <p><img title="Julia's demonstration" src="http://www.botzilla.com/blog/pix2007/P1060403.jpg" width="807" height="454" border="0" /></p>
+
+<p>I will return some time on Thursday or so.</p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000568.html">February 20, 2007</a>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000568.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 17, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000565"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000565.html">Is Photography Inherently Humanizing? (I)</a></h1>
+        <p><img alt="IMG_0354.psd" src="http://www.botzilla.com/blog/pix2007/IMG_0354.jpg" width="267" height="400" border="0" align="right" vspace=6 hspace=8 ><b>Part 1</b></p>
+
+<p>One of the most difficult aspects surrounding the practice of war photography (and other "socially concerned" photography, as exemplified by, say, Salgado's gold miner photos) is that almost universally, the stated aim of photgraphers who pursue that vocation is that they desire an end to war &#151; a specific war, or all wars. As has been pointed out my a number of detractors, most prominently Susan Sontag, there's little evidence to show that photography has done much of anything to stop wars.</p>
+
+<p>The 2007 <a href="http://www.worldpressphoto.com/">World Press Photo</a> awards have been in announced in the past couple of days, and it's no surprise that the dominant award winners &#151; especially in "singles" &#151; are of combat and its aftermath. The World Press Photo of the Year itself is one: Spencer Platt's celebrated shot of a group of well-heeled and comopolitan young Lebanese cruising through post-airstrike destruction in their red convertible, one of them sourly fiddling with her celphone camera.</p>
+
+<p>It's a disturbing image for its collapsing effect &#151; this clutch of handsome consumers, viewing firsthand the sorts of things that consumers should expect not in their surroundings but on TV, <i>in pictures.</i> One young woman guards her nose with a cloth and a disdainful look. And they themselves seem torn from a BMW ad, as if somehow the evening news has mistakenly intruded into the commercial time.</p>
+
+<p>It's a picture about looking. These people are looking at the destruction, and a bystander, apparently part of the bombed neighborhood, likewise looks at them &#151; and of course <i>we</i> are looking at all of them through the borrowed eye of the photographer. It's also a photo about connections &#151; no less than three celphones are in use in this shot.</p>
+
+<p>It's a photo that challenges worldviews, which is simultaneously why it's an award winner and yet why its impact is so easily disappated by the Grand Parade of Media, which knows that it must first and foremost confirm and conform to the <i>status quo.</i> Steering, if it comes at all, only comes gradually or in the form of great tragedy.</p>
+
+<p>It's also not the sort of shot that would garner much praise from the "better photo" composition police. Too jumbled, too many partial figures, no clear line or strong dominant color. It takes too long to look at, and it doesn't read well when reduced to 100 pixels as an inset on a web page.</p>
+
+<p>Compare instead to the spot news singles winners. every one of them clear and graphically punchy. To my eye they seem more successful as photographs, &#151; as colored rectangles &#151; than they do as images that challenge, inform, and compell. It is difficult &#151; no, impossible &#151; for me to know which of those two characteristics were most important for the judges in the choice of each photograph.</p>
+
+<p>I've bought a number of World Press Photo Yearbooks over the past ten or fifteen years. Is it just me, or do the photos seem to each year rely more on color and graphic punch? Is it a change in cameras, or a change in emphasis to images that need to read well on the web at sizes from 60 pixels on up?</p>
+
+<p>I can't pretend to have the answers wrapped in a neat ribbon, but it seems to me that the desire of editors for photos that are more page-design punctuation than information sources has never been greater.</p>
+
+<p>Assuming, for one instant, that the purpose of news gathering and publishing is something more than as a grimly spectacular entertainment, and that its functions to inform are truly driven from some altruistic bent, then why is photography so challenged?</p>
+
+<p>Part of it, surely, has to do with the fact that propaganda is profitable. The Fox Newses of the world have seen the value of letting people avoid having to use information to inform their moral and ethical judgement &#151; rather, it's easier to just give them a narrow range of factoids intended to reinforce a predetermined framing of the world, to ensure that all new information is either bent or filtered into a form that fits the existing, simple-to-grasp and continuously self-affirming story.</p>
+
+<p>I don't think the story is inherently partisan, <i>&aacute; la</i> Fox. Rather, Fox is just one variation of the larger simple story: <i>Everything is fine here but the faraway world is bad. Here, buy something.</i></p>
+
+<p>And that's a story whose foundations are chipped at by Platt's photo. </p>
+
+<p>(<a href="http://www.botzilla.com/blog/archives/000570.html">Part II here,</a> Part III <a href="http://www.botzilla.com/blog/archives/000599.html">here.</a>)</p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000565.html">February 17, 2007</a>
+        	<span id="cmts_000565">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=565" onclick="OpenComments(this.href); return false">Comments (2)</a></span>
+            <script>
+            botz.commentCount['cmts_000565'] = 2;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000565.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 16, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000569"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000569.html">Cleaned</a></h1>
+        <p><img alt="P1060742.jpg" src="http://www.botzilla.com/blog/pix2007/P1060742.jpg" width="807" height="454" border="0" /></p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000569.html">February 16, 2007</a>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000569.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 14, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000567"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000567.html">SCWL2</a></h1>
+        <p><img alt="P1060763-color.jpg" src="http://www.botzilla.com/blog/pix2007/P1060763-color.jpg" width="807" height="454" border="0" /><br />
+</p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000567.html">February 14, 2007</a>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000567.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 13, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000566"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000566.html">Santa Clara Winter Light</a></h1>
+        <p><img alt="(C)2007" src="http://www.botzilla.com/blog/pix2007/P1060763.jpg" width="807" height="454" border="0" /></p>
+
+<p>In January and February of each year the light here in the Valley breaks in a consistent and spectacularly unique way. In the morning, on somewhat overcast days, the morning warm breaks-open a slot in the cloud cover to the East, above Mount Hamilton near San Jose. The light pours through the narrow opening at a shallow angle, aboveSan Jose to strike us here, in Santa Clara. </p>
+
+<p>In the evenings, the cloud cover cracks against the Santa Cruz mountains to the west, above Saratoga and Cupertino, and the light, again, beams through the slot to strike right here.</p>
+
+<p>Low, direct sunlight, shining on an otherwise overcast day. You couldn't buy this kind of light, and it's here <a href="http://www.flickr.com/photos/bjorke/sets/356507/show/">every year.</a></p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000566.html">February 13, 2007</a>
+        	<span id="cmts_000566">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=566" onclick="OpenComments(this.href); return false">Comments (0)</a></span>
+            <script>
+            botz.commentCount['cmts_000566'] = 0;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000566.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 11, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000563"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000563.html">Cardiac Unit</a></h1>
+        <p><img title="Stanford Medical Center, 2007" src="http://www.botzilla.com/blog/pix2007/P1060727.jpg" width="807" height="454" border="0" /></p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000563.html">February 11, 2007</a>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000563.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 10, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000562"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000562.html">Styling</a></h1>
+        <p><img title="(C)2007 Kevin Bjorke" src="http://www.botzilla.com/blog/pix2007/IMG_0597.jpg" width="267" height="400" border="0" align="right" hspace=8 vspace=4/>Both of my primary digital cameras now have the ability to save a full-sized JPEG image along with the corresponding RAW file. So I've taken to setting them both up the same way: with the JPEG stored as B&W, high contrast, and the color balance set to "AUTO" or "Daylight."</p>
+
+<p>This buys me a couple of things besides the obvious one: B&W photos that are B&W out of the box. It gives me the option of later tweaking the B&W conversion from the RAW files, but also &#151; and I've found this to be genuinely useful &#151; a strong, contrasty image on the preview screen that reads well in bright or dark conditions &#151; <i>even if I'm shooting in color.</i></p>
+
+<p>The punchy B&W preview is useful as a strong litmus test about the immediate readability of an image. Not that all pictures need a crisp graphic style, but when they do, the B&W preview shows it.</p>
+
+<p>When I worked a lot on TV commercials we would keep a bad B&W TV set around for previewing. There was a $3000 13-inch color studio monitor next to it. The B&W set was placed there by our postproduction color timing expert, who always wanted to preview everything on it to be sure the results of his work were truly readable.</p>
+
+<p>A few years later, I attended a talk by an art director from Pacific Data Images, talking about <i>Shrek,</i> and they followed a similar method: they would look at every shot in <i>both</i> color and B&W. "If it looks good in B&W, the color will only add to the shot." At Pixar, there were a few animators who would turn off the preview shading on their characters &#151; the result wasn't B&W images, but while working they got the figures down to their essential outlines, so that the scenes on the film would play with inerrant clarity.</p>
+
+<p>I've also found, and this is doubtless some failing on my part, that if I see the picture <i>only</i> in color &#151; if I don't see it early in B&W &#151; then I just never move it to B&W. In the world, while making photos, <i>obviously</i> what I'm seeing through the viewfinder is the full-color world... yet it doesn't have, for me, the same psychological effect, the <i>pictureness</i> that gives it permanence, until it's a picture. If it's a color picture, I just read it at that. It's easy to imagine a B&W picture from the world, but hard to imagine one from a color picture. I don't know why this is, but it seems true for me. I react to pictures as pictures. Which is probably as it should be.</p>
+
+<p>There's a further technological spoon stirring all this up. Frustratingly, <a href="http://www.adobe.com/products/photoshop/cameraraw.html">Adobe Camera Raw (ACR)</a> simply refuses to honor the B&W-ness of RAW files from either the 5D or the LX-1. Canon encapsulates such data in <a href="http://web.canon.jp/Imaging/picturestyle/index.html">"Picture Styles,"</a> which they expressly encrypt or otherwise mask from Photoshop's prying software. And I genuinely can't even tell if Panasonic included the color effect information in their RAW format (Besides, I habitually convert all my Panasonic RAWs to <a href="http://www.adobe.com/products/dng/">Adobe DNG</a> format, which only consumes about half the disk space).</p>
+
+<p>For a while, I took the strategy of trying to set up ACR defaults per-camera, so that everything would come through set to a high-contrast B&W. But that was counterproductive since I only some of my photos are really intended to be B&W. ACR wants to give an all-or-nothing solution. The only good way is to keep the JPEGs. Better yet, sometimes the JPEG can be the final picture anyway.</p>
+
+<p>Another option, which I've been somewhat surprised at, has been to make less use of ACR and Bridge, programs that I've really liked and had hoped would be the axis of all my workflow. At least for the Canon files. Canon's  <a href="http://photoworkshop.com/canon/dpp2/index.html">Digital Photo Pro</a> doesn't have the scriptability of Adobe Bridge or the full power of Photoshop, but it does have the simple ability to honor Canon Picture Styles, and its color algorithms closely match (should be: identical?) the intents of the original camera-sensor (and picture style) designers.</p>
+
+<p>As for ACR, I still use it all the time, and I reset the defaults to keep doing what it likes to do: assign the brightness and color and everything else according to Adobe's own secret sauce knowledge. It does a good job. I know that I can always look back at the JPEG to get a glimpse of what I was <i>really</i> thinking when I snapped picture "IMG_6769" or "P2565811."</p>
+
+<p>Right now I'm more or less happy with how this is working. It saddens and frustrates me, thinking of the ongoing difficulties revolving around all the work I went through to get to this point, and the ongoing future storage headaches. But things seem, at least for today, stable and predictable. Maybe I really <i>will</i> be able to keep the same cameras and workflow for a long time.</p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000562.html">February 10, 2007</a>
+        	<span id="cmts_000562">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=562" onclick="OpenComments(this.href); return false">Comments (3)</a></span>
+            <script>
+            botz.commentCount['cmts_000562'] = 3;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000562.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 09, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000561"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000561.html">>V<</a></h1>
+        <p><img alt="IMG_0540.jpg" src="http://www.botzilla.com/blog/pix2007/IMG_0540.jpg" width="807" height="454" border="0" /></p>
+
+<p>Okay, after writing the previous entry I managed to shame myself into motion and go back to read all of those 58 posts. Can it be: <a href="http://alecsoth.com/blog/2007/01/28/la-belle-vie/">Is Alec Soth channeling the spirit of Dick Avery?</a></p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000561.html">February 09, 2007</a>
+        	<span id="cmts_000561">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=561" onclick="OpenComments(this.href); return false">Comments (0)</a></span>
+            <script>
+            botz.commentCount['cmts_000561'] = 0;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000561.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 08, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000560"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000560.html">Second Job</a></h1>
+        <p><img title="(C)2007 K Bjorke" src="http://www.botzilla.com/blog/pix2007/IMG_0239.jpg" width="807" height="416" border="0" /></p>
+
+<p>The Second Job doesn't come with a second paycheck. Ah well.</p>
+
+<p>Besides working on <i>GPU Gems III</i> (the quality of the submissions just keeps rising with each successive edition! Far more fantastic work than we even can squeeze into one large book... choosing the most-appropriate from so many good choices is tough); prepping for the <a href="http://upcoming.org/event/71922/">upcoming</a> <a href="www.gdconf.com/ ">Game Developers Conference</a> in San Francisco; creating proposals and abstracts for conferences in the months after that; working on <a href="http://developer.nvidia.com/">developer tools</a> and ongoing work in helping 3D artists expand their abilities to create great-looking GPU-savvy games... I'm also busy dealing with lots of MMO and Virtual-World developers and researchers.</p>
+
+<p>I guess it was my inevitable destiny: the origins of the name for this very site, <a href="http://www.botzilla.com/">Botzilla,</a> come from the now-slumbering <a href="http://www.botzilla.com/house/ibot.html">BotBot</a> program, designed to create customized avatar scripts for the mid-90's virtual world <a href="http://en.wikipedia.org/wiki/The_Palace_%28computer_program%29">The Palace.</a></p>
+
+<p>It </i>would</i> certainly be useful to have a second me around, mostly to do errands while the FirstMe was busy with... well, you know, <i>stuff.</i></p>
+
+<p>Stuff like keeping track of the household, making sure people get fed, homework completed, DVDs and library books returned, Tivo watched, pictures occasionally taken or printed, books read, scuba gear used, friends acknowledged and seen, or keeping up with my <a href="http://www.bloglines.com/public/bjorke">RSS feeds,</a> which I set up in <i>theory</i> to make it easier to keep up with blog pages and the like. Unless I'm insanely diligent they just keep falling behind, behind, behind... all the labor-saving technology is a powerful mechanism for giving me too much to do. Rather than being thrilled that, say, <a href="http://alecsoth.com/blog/">Alec Soth</a> has posted 58 entries over the past month or so, entries I know I will enjoy reading should I get the chance, I just end up feeling guilty that I haven't <i>had</i> the chance for a settled time to read them :/</p>
+
+<p>And then there are the games... I'm still lingering in the late second act of <i>Final Fantasy XII,</i> interupted by two weeks of computer-less and console-less holiday break, and looking in the immediate future my hope of playing any of my existing consolers gets increasingly slim under the encroaching shadows of Wii and PS3 or any of the many great PC titles that are stacking up next to "Lolo," my game-and-itunes machine.</p>
+
+<p>Just the same: if you do wander into <a href="http://secondlife.com/">SecondLife,</a> give an IM holler to "Shashinka Komparu" or just seek out (and join!) the "NVIDIOTS" group.</p>
+
+<p>(Or if you play <a href="http://www.eve-online.com/">EVE:</a> drop me a line either here or via eve-mail to "Fenris Chow" &#151; our <a href="http://www.eve-msyds.com/">corporation</a> is likely to open for recruitment again in the near future)</p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000560.html">February 08, 2007</a>
+        	<span id="cmts_000560">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=560" onclick="OpenComments(this.href); return false">Comments (1)</a></span>
+            <script>
+            botz.commentCount['cmts_000560'] = 1;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000560.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 07, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000559"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000559.html">Palo Alto</a></h1>
+        <p><img title="Palo Alto, Ca. (C) 2007 KBjorke" src="http://www.botzilla.com/blog/pix2007/IMG_0235.jpg" width="807" height="352" border="0" /><br />
+</p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000559.html">February 07, 2007</a>
+        	<span id="cmts_000559">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=559" onclick="OpenComments(this.href); return false">Comments (0)</a></span>
+            <script>
+            botz.commentCount['cmts_000559'] = 0;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000559.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 06, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000558"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000558.html">San Jose Stereo</a></h1>
+        <p><img alt="IMG_0350-stereo.jpg" src="http://www.botzilla.com/blog/pix2007/IMG_0350-stereo.jpg" class="img-responsive" border="0" /></p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000558.html">February 06, 2007</a>
+        	<span id="cmts_000558">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=558" onclick="OpenComments(this.href); return false">Comments (1)</a></span>
+            <script>
+            botz.commentCount['cmts_000558'] = 1;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000558.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+          
+      <!--       <h2 class="date">February 01, 2007</h2>
+       -->
+      <div class="blogbody">
+        <a name="000557"></a>
+        <h1><a href="http://www.botzilla.com/blog/archives/000557.html">Cold Winter, Little Time</a></h1>
+        <p><center><img alt="IMG_0258.jpg" src="http://www.botzilla.com/blog/pix2007/IMG_0258.jpg" width="405" height="608" border="0" /><br />
+<i>Somewhere in Canada</i></center></p>
+
+        
+
+        <div class="posted">
+        	Posted <a href="http://www.botzilla.com/blog/archives/000557.html">February 01, 2007</a>
+        	<span id="cmts_000557">
+        	| <a href="http://www.botzilla.com/cgi-bin/mt-comments.cgi?entry_id=557" onclick="OpenComments(this.href); return false">Comments (0)</a></span>
+            <script>
+            botz.commentCount['cmts_000557'] = 0;
+            </script>
+        	
+        	
+          <br clear="right">
+          <script type="text/javascript">
+        	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000557.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:35px;" allowTransparency="true"></iframe>');
+        	</script>
+        </div>
+      </div>
+    
+    <p>&nbsp;</p>
+    <div class="well well-sm"><small><i>All content on botzilla.com is ©1994-2017 by Kevin Bjorke. All Rights Reserved.</i></small></div>
+  </div>
+  <div class="col-md-3 text-right">
+      <ul class="list-unstyled">
+        <li><a href="http://www.botzilla.com/blog/index.html"
+            title="BotzBlog Current Index">Current Entry</a></li>
+        <li><a href="http://www.botzilla.com/blog/archives.html"
+            title="Journal Archives, Blogrolls, & Links 4 U!">Links+Archives</a></li>
+        <li><a href="http://www.botzilla.com/blog/index.xml" title="Subscribe">RSS</a></li>
+        <li><a href="/photo/botzpix/"
+            title="Photos Indexed from This Journal">Blogshots</a></li>
+        <li><a href="/photo/salon/gindex.html"
+          title="Sorta-Weekly Photos, 2002-2003 - Maybe the real photoblog?">Street Photo</a></li>
+        <li><a href="/index.html"
+          title="Much More Botzilla">Home</a></li>
+        </ul>
+  </div>
+  </div>
+
+</div>
+
+</body>
+</html>

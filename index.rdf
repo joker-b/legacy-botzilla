@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+  xmlns:admin="http://webns.net/mvcb/"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns="http://purl.org/rss/1.0/">
+
+  <channel rdf:about="http://www.botzilla.com/blog/">
+    <title>PhotoRant+ is a Botzilla Blog</title>
+    <link>http://www.botzilla.com/blog/</link>
+    <description>Optimistically world-weary since 1994.</description>
+    <dc:language>en-us</dc:language>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2017-07-03T20:01:53-08:00</dc:date>
+    <admin:generatorAgent rdf:resource="http://www.movabletype.org/?v=2.661" />
+    <admin:errorReportsTo rdf:resource="mailto:kevin.bjorke+botzadmin@gmail.com"/>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <sy:updateBase>2000-01-01T12:00+00:00</sy:updateBase>
+    <items>
+      <rdf:Seq>
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000902.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000900.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000898.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000894.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000893.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000892.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000891.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000890.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000889.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000888.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000887.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000886.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000885.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000884.html" />
+        <rdf:li rdf:resource="http://www.botzilla.com/blog/archives/000883.html" />
+
+      </rdf:Seq>
+    </items>
+  </channel>
+
+  <item rdf:about="http://www.botzilla.com/blog/archives/000902.html">
+    <title>The New FujiChrome: Fujifilm-X and Chromebook</title>
+    <description> I&apos;ve been experimenting with the latest breed of Google Chromebooks -- unlike their predecessors, these new Chromebooks can also run Android apps, placing them somewhere between a laptop and a phone or tablet in functionality. Of course a new...</description>
+    <content:encoded><![CDATA[<img alt="FujiXChromebookAndroid.jpg" src="http://www.botzilla.com/blog/archives/pix2017/Fuji-Chrome-C.jpg" class="img-responsive" border="0" />
+
+<p>I've been experimenting with the latest breed of Google Chromebooks -- unlike their predecessors, these new Chromebooks can also run Android apps, placing them somewhere between a laptop and a phone or tablet in functionality. Of course a new under-$400 Chromebook is no match for a full-powered $2000+ laptop as a photo workflow machine... right?</p>]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000902.html</link>
+    <dc:subject>Fujifilm</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2017-07-03T20:01:53-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000900.html">
+    <title>Che Guevara</title>
+    <description> You don&apos;t have to go out looking for Dr Ernesto Guevara when in Cuba -- his picture will find you. Guerrillero Heroico Che has become, as it was described to me more than once, the logo of Cuba. I&apos;ve...</description>
+    <content:encoded><![CDATA[<img alt="bjorke_Cuba_KBXP8930.jpg" src="http://www.botzilla.com/blog/archives/pix2017/bjorke_Cuba_KBXP8930.jpg" class="img-responsive" border="0" />
+
+<p>You don't have to go out looking for Dr Ernesto Guevara when in Cuba -- his picture will find you. <i>Guerrillero Heroico Che</i> has become, as it was described to me more than once, the logo of Cuba. I've read that it's the most famous photograph in the world. </p>
+
+]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000900.html</link>
+    <dc:subject>fStop</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2017-03-17T10:32:27-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000898.html">
+    <title>Ban Rra Rra, Habana Centro</title>
+    <description> &quot;Don’t shoot what it looks like. Shoot what it feels like.&quot; - David Alan Harvey &quot;Art does not reproduce the visible; rather, it makes visible.&quot; - Paul Klee...</description>
+    <content:encoded><![CDATA[<img alt="bjorke_Cuba_KBXP8127.jpg" src="http://www.botzilla.com/blog/archives/pix2017/bjorke_Cuba_KBXP8127.jpg" class="img-responsive" border="0" />
+<p class="well"><i>"Don’t shoot what it looks like. Shoot what it feels like."</i> - <a href="https://www.davidalanharvey.com/">David Alan Harvey</a><br />
+<i>"Art does not reproduce the visible; rather, it makes visible."</i> - <a href="http://www.openculture.com/2016/03/3900-pages-of-paul-klees-personal-notebooks-are-now-online.html">Paul Klee</a></p>
+]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000898.html</link>
+    <dc:subject>fStop</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2017-03-14T19:39:20-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000894.html">
+    <title>Havana: Caged Bouquet</title>
+    <description><![CDATA[(Jump to slideshow) Trocadero y Paseo de Marti The Old Man was dead. &quot;We should go to Cuba before it changes too much,&quot; See See told me that evening. &quot;Definitely,&quot; I agreed with her, &quot;before they finish putting in a...]]></description>
+    <content:encoded><![CDATA[<p><small><i><a href="#slides">(Jump to slideshow)</a></i></small></p>
+<div class="thumbnail"><img alt="bjorke_Cuba_KBXP7194.jpg" src="http://www.botzilla.com/blog/archives/pix2017/bjorke_Cuba_KBXP7194.jpg" class="img-responsive" border="0" /><div class="caption"><p>Trocadero y Paseo de Marti</p></div></div>
+
+<p>The Old Man was dead.</p>
+<p>&quot;We should go to Cuba before it changes too much,&quot; See See told me that evening.</p>
+<p>&quot;Definitely,&quot; I agreed with her, &quot;before they finish putting in a Bubba Gump and TGIFriday's on the <i>Malecón.&quot;</i> </p>
+<p>So I set aside my winter holidays and started looking at options, logistically and legally. Try to find something we could do together. Maybe an art workshop? Almost immediately, I found: Santa Fe Workshops, <a href="https://santafeworkshops.com/workshop/havana-open-window/"><i>Open Door Havana with David Alan Harvey.</i></a>  Holy cow!</p>
+]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000894.html</link>
+    <dc:subject>fStop</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2017-03-12T18:28:09-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000893.html">
+    <title>Meike 50mm ƒ/2 for Fujifilm X: Light, Inexpensive, Slow but Useful</title>
+    <description>Macau, November 2016 In November I purchased a Meike 50mm ƒ/2 lens for Fujifilm X mount, as a travel and X-Pro-OVF-friendly alternative to my 56mm ƒ/1.2, which is great but not really pocketable (and it obscures a lot of the...</description>
+    <content:encoded><![CDATA[<div class="thumbnail"><img alt="bjorke_Macau_KBXP0129-wall.jpg" src="http://www.botzilla.com/blog/archives/pix2017/bjorke_Macau_KBXP0129-wall.jpg" class="img-responsive" border="0" /><div class="caption"><p>Macau, November 2016</p></div></div>
+
+<p>In November I purchased a <a href="http://www.mkgrip.com/goods/show-191.html/">Meike 50mm ƒ/2 lens</a> for Fujifilm X mount, as a travel and X-Pro-OVF-friendly alternative to my 56mm ƒ/1.2, which is great but not really pocketable (and it obscures a lot of the X-Pro2 optical finder). I had hoped for an early release of the upcoming Fuji XF 50mm ƒ/2 WR, but it was delayed. And delayed. And even now, in 2017, it is still not officially released. Since the release date of Fuji’s lens is reportedly tomorrow, and since I’ve never actually seen a review of the Meike lens, it seems about time to write a few notes:</p>
+
+]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000893.html</link>
+    <dc:subject>Fujifilm</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2017-01-18T23:55:27-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000892.html">
+    <title>Boxes</title>
+    <description></description>
+    <content:encoded><![CDATA[<p><img alt="bjorke_EarthDay_KBXP2213.jpg" src="http://www.botzilla.com/blog/archives/pix2016/bjorke_EarthDay_KBXP2213.jpg" class="img-responsive" border="0" /><br />
+</p>]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000892.html</link>
+    <dc:subject>fStop</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2016-04-20T08:27:19-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000891.html">
+    <title>Just Past Earth Day</title>
+    <description> Another sunrise commuting photo, on the way to the Financial District....</description>
+    <content:encoded><![CDATA[<p><img alt="bjorke_EarthDay_KBXP2281.jpg" src="http://www.botzilla.com/blog/archives/pix2016/bjorke_EarthDay_KBXP2281.jpg" class="img-responsive" border="0" /></p>
+
+<p>Another sunrise commuting photo, on the way to the Financial District.</p>]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000891.html</link>
+    <dc:subject>The Troubles</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2016-04-18T22:04:18-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000890.html">
+    <title>Priest</title>
+    <description> &quot;Many pictures turn out to be limp translations of the known world instead of vital objects which create an intrinsic world of their own. There is a vast difference between taking a picture and making a photograph.&quot; - Robert...</description>
+    <content:encoded><![CDATA[<img alt="bjorke_NewOffice_KEVT8248.jpg" src="http://www.botzilla.com/blog/archives/pix2016/bjorke_NewOffice_KEVT8248.jpg" class="img-responsive" border="0" />
+<p class="well"><i>"Many pictures turn out to be limp translations of the known world instead of vital objects which create an intrinsic world of their own. There is a vast difference between taking a picture and making a photograph."</i> - Robert Heinecken</p>]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000890.html</link>
+    <dc:subject>fStop</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2016-04-15T00:11:40-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000889.html">
+    <title>Monday Morning Commute, San Francisco</title>
+    <description>X-Pro2, 35mm f/2.0 WR, default settings Today&apos;s entry is just a simple shot made from a hill near the Golden Gate Bridge, shot while cycling towards the San Francisco Financial District (distant right). The camera&apos;s doing much of the work...</description>
+    <content:encoded><![CDATA[<p><center><img alt="bjorke_Rain_KBXP1734.jpg" src="http://www.botzilla.com/blog/archives/pix2016/bjorke_Rain_KBXP1734.jpg" class="img-responsive" border="0" /><br><i>X-Pro2, 35mm f/2.0 WR, default settings</i></center></p>
+
+<p>Today's entry is just a simple shot made from a hill near the Golden Gate Bridge, shot while cycling towards the San Francisco Financial District (distant right).  The camera's doing much of the work here.</p>]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000889.html</link>
+    <dc:subject>Fujifilm</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2016-04-12T20:27:30-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000888.html">
+    <title>Clarifications</title>
+    <description></description>
+    <content:encoded><![CDATA[<p><img alt="bjorke_clarifications.jpg" src="http://www.botzilla.com/blog/archives/pix2016/bjorke_clarifications.jpg" class="img-responsive" border="0" /><br />
+</p>]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000888.html</link>
+    <dc:subject>PhotoRant</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2016-03-29T09:56:16-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000887.html">
+    <title>Nine Statements</title>
+    <description>Nine simple statements of principles that guide my current photographic practice.</description>
+    <content:encoded><![CDATA[<p><img alt="20150115_220045_431.jpg" src="http://www.botzilla.com/blog/archives/pix2106/20150115_220045_431.jpg" class="img-responsive" border="0" /></p>
+<p>Here are nine statements that I hope clarify to readers (and myself) what I'm on about here at PhotoRant.</p>
+<p>It's also a useful prep for me as I try to write up more about the nature of my actual working methods. I don't expect them to apply for everyone, but here they are:</p>]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000887.html</link>
+    <dc:subject>PhotoRant</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2016-03-27T11:17:53-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000886.html">
+    <title>April Art in Palo Alto</title>
+    <description>Hidden Layers 3, 2016 I will have some pieces in the April exhibition at Palo Alto&apos;s Pacific Art League. As usual the opening will be on the first Friday. As you might expect for anything containing my work, that&apos;s April...</description>
+    <content:encoded><![CDATA[<p class="text-center"><img alt="bjorke_HiddenLayer_KBXP1039.jpg" src="http://www.botzilla.com/blog/archives/pix2016/bjorke_HiddenLayer_KBXP1039.jpg" class="img-responsive" border="0" /><br /><i>Hidden Layers 3, 2016</i</p>
+<p>I will have some pieces in the April exhibition at Palo Alto's Pacific Art League. As usual the opening will be on the first Friday. As you might expect for anything containing my work, that's April First.</p>
+<p>Please feel free to come by during the opening reception that evening between 6 and 8PM, where you can critique in person over a glass of wine; or visit any time during the first three weeks of April. The gallery is at the corner of Forest and Ramona Streets, across from Palo Alto City Hall.</p>]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000886.html</link>
+    <dc:subject>PhotoRant</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2016-03-25T20:25:23-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000885.html">
+    <title>Seven C&apos;s</title>
+    <description>Adding the Fujifilm X-Pro2 to my kit has had me reviewing jpg-output custom image settings again. It&apos;s a regular topic of conversation on internet forums and reviews and blogs -- how to set up the custom functions in the X100T,...</description>
+    <content:encoded><![CDATA[<p>Adding the Fujifilm X-Pro2 to my kit has had me reviewing jpg-output custom image settings again. It's a regular topic of conversation on internet forums and reviews and blogs -- how to set up the custom functions in the X100T, on the X-T1, or, now, the X-Pro2?</p>
+<p>There are something like a million possible permutations of settings for each of the custom collections: how to pick, and how to keep track of the selections (What did I have on C3 again?)? My choice has been to break things down along just two axes: picture type and color/monochrome. I then to set <i>all cameras to use the same custom-settings layout</i> so I only have to learn one setup.<p>
+<p>The table shows the layout and details about the choices follow below the fold.</p>
+
+<style>
+	.C1C7 td, .C1C7 th { text-align: center; vertical-align: center; }
+	.C1C7 .note { text-align: left; }
+	.C1C7 .X100T { color: #338; font-style: italic; }
+	.C1C7 .X-Pro2 { color: #722; font-style: italic; }
+	</style>
+<div class="well center-block C1C7">
+<table class="table table-bordered table-striped"><thead>
+<tr><th>&nbsp;</th>
+<th>Sim</th>
+<th>WB</th>
+<th>DR</th>
+<th>Shad</th>
+<th>Hi</th>
+<th>Sharp</th>
+<th>NR</th>
+<th>Color</th>
+<th class="X100T"><a href="#" data-toggle="tooltip" data-placement="top" title="X100T Only">ISO</a></th>
+<th class="X-Pro2"><a href="#" data-toggle="tooltip" data-placement="top" title="X-Pro2 Only">Grain</a></th>
+<th class="note">Notes</th></tr></thead>
+
+<tbody><tr><th>C1</th>
+<td>Std</td>
+<td>AWB</td>
+<td>A</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td class="X100T">800</td>
+<td class="X-Pro2">-</td>
+<td class="note"><b>RESET EVERYTHING.</b></td></tr>
+
+<tr><th>C2</th>
+<td><a href="#" data-toggle="tooltip" data-placement="right" title="Acros Y for X-Pro2">By</a></td>
+<td>AWB</td>
+<td>A</td>
+<td>+2</td>
+<td>-1</td>
+<td>+1</td>
+<td>-1</td>
+<td>-</td>
+<td class="X100T">A3200</td>
+<td class="X-Pro2">S</td>
+<td class="note"><b>B&amp;W Street.</b></td></tr>
+
+<tr><th>C3</th>
+<td>Cc</td>
+<td>AWB</td>
+<td>A</td>
+<td>+2</td>
+<td>-1</td>
+<td>+1</td>
+<td>-1</td>
+<td>+1</td>
+<td class="X100T">A3200</td>
+<td class="X-Pro2">W</td>
+<td class="note"><b>Color Street.</b></td></tr>
+
+<tr><th>C4</th>
+<td><a href="#" data-toggle="tooltip" data-placement="right" title="Acros G for X-Pro2">Bg</a></td>
+<td>Sun</td>
+<td>100</td>
+<td>-1</td>
+<td>-1</td>
+<td>-1</td>
+<td>-2</td>
+<td>-</td>
+<td class="X100T">800</td>
+<td class="X-Pro2">-</td>
+<td class="note"><b>B&amp;W Studio/Flash Portraits.</b></td></tr>
+
+<tr><th>C5</th>
+<td>NPS</td>
+<td>Sun</td>
+<td>100</td>
+<td>-1</td>
+<td>-1</td>
+<td>-1</td>
+<td>-2</td>
+<td>0</td>
+<td class="X100T">800</td>
+<td class="X-Pro2">-</td>
+<td class="note"><b>Color Studio/Flash Portraits.</b></td></tr>
+
+<tr><th>C6</th>
+<td><a href="#" data-toggle="tooltip" data-placement="right" title="Acros G for X-Pro2">Bg</a></td>
+<td>AWB</td>
+<td>100</td>
+<td>-1</td>
+<td>-1</td>
+<td>-1</td>
+<td>-2</td>
+<td>-</td>
+<td class="X100T">800</td>
+<td class="X-Pro2">-</td>
+<td class="note"><b>B&amp;W Existing Light Portraits.</b></td></tr>
+
+<tr><th>C7</th>
+<td>NPS</td>
+<td>AWB</td>
+<td>100</td>
+<td>-1</td>
+<td>-1</td>
+<td>-1</td>
+<td>-2</td>
+<td>0</td>
+<td class="X100T">800</td>
+<td class="X-Pro2">-</td>
+<td class="note"><b>Color Existing Light Portraits.</b></td></tr>
+</tbody></table>
+</div>
+]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000885.html</link>
+    <dc:subject>Fujifilm</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2016-03-24T20:15:23-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000884.html">
+    <title>FujiFilm X-Pro2 Film Simulations</title>
+    <description> A picture is worth books full of text. Here are the various film simulation modes available on the X-Pro2, along with Adobe Camera Raw&apos;s attempt at &quot;Auto&quot; adjustment. New for this camera are the &quot;Acros&quot; B&amp;W modes....</description>
+    <content:encoded><![CDATA[<p><img alt="X-Pro2 Film Simulations" src="http://www.botzilla.com/blog/archives/pix2016/bjorke_XPro2_Sims.jpg" class="img-responsive" border="0" /><br />
+A picture is worth books full of text. Here are the various film simulation modes available on the X-Pro2, along with Adobe Camera Raw's attempt at "Auto" adjustment. New for this camera are the "Acros" B&W modes.<br />
+</p>]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000884.html</link>
+    <dc:subject>Fujifilm</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2016-03-18T22:11:06-08:00</dc:date>
+  </item>
+  <item rdf:about="http://www.botzilla.com/blog/archives/000883.html">
+    <title>Home-Hacking the Fujifilm X-Pro-2</title>
+    <description> Why don&apos;t more industrial designers design for fingertips? They seem to understand grip, but sensation... less. Over the past couple of years I&apos;ve taken to hacking the mechanical controls of my cameras (and a few other items) with Sugru,...</description>
+    <content:encoded><![CDATA[<p><img alt="bjorke_sugru_P1080793c.jpg" src="http://www.botzilla.com/blog/archives/pix2016/bjorke_sugru_P1080793c.jpg" class="img-responsive" border="0" /><br />
+Why don't more industrial designers design <i>for fingertips?</i> They seem to understand grip, but sensation... less.</p>
+
+<p>Over the past couple of years I've taken to hacking the mechanical controls of my cameras (and a few other items) with <a href="http://www.sugru.com/" target="_new">Sugru,</a> a quick-curing material that's a bit like a cross between modeling clay and rubber. The idea is simple: provide tactile landmarks for my fingers, so that I can use the camera's controls without needing to look at them -- either because it's raised to my eye, or even if the camera is out of sight in my bag or jacket pocket, preparing for the next shot.</p>]]></content:encoded>
+    <link>http://www.botzilla.com/blog/archives/000883.html</link>
+    <dc:subject>GearHead</dc:subject>
+    <dc:creator>bjorke</dc:creator>
+    <dc:date>2016-03-17T15:51:00-08:00</dc:date>
+  </item>
+
+
+</rdf:RDF>

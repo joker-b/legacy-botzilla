@@ -1,0 +1,248 @@
+<!DOCTYPE html >
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title> Four Friends with Funny Frame Rates: PhotoRant+ is a Botzilla Blog</title>
+
+<link rel="stylesheet" href="http://www.botzilla.com/blog/styles-site.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.botzilla.com/blog/index.rdf" />
+
+<link rel="start" href="http://www.botzilla.com/blog/" title="Home" />
+<link rel="prev" href="http://www.botzilla.com/blog/archives/000752.html" title="A Missing Holiday" />
+
+
+
+<script language="javascript" type="text/javascript" src="/jquery.js"></script><script type="text/javascript" language="javascript">
+<!--
+
+function OpenTrackback (c) {
+    window.open(c,
+                    'trackback',
+                    'width=480,height=480,scrollbars=yes,status=yes');
+}
+
+var HOST = 'www.botzilla.com';
+
+// Copyright (c) 1996-1997 Athenia Associates.
+// http://www.webreference.com/js/
+// License is granted if and only if this entire
+// copyright notice is included. By Tomer Shiran.
+
+function setCookie (name, value, expires, path, domain, secure) {
+    var curCookie = name + "=" + escape(value) + ((expires) ? "; expires=" + expires.toGMTString() : "") + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + ((secure) ? "; secure" : "");
+    document.cookie = curCookie;
+}
+
+function getCookie (name) {
+    var prefix = name + '=';
+    var c = document.cookie;
+    var nullstring = '';
+    var cookieStartIndex = c.indexOf(prefix);
+    if (cookieStartIndex == -1)
+        return nullstring;
+    var cookieEndIndex = c.indexOf(";", cookieStartIndex + prefix.length);
+    if (cookieEndIndex == -1)
+        cookieEndIndex = c.length;
+    return unescape(c.substring(cookieStartIndex + prefix.length, cookieEndIndex));
+}
+
+function deleteCookie (name, path, domain) {
+    if (getCookie(name))
+        document.cookie = name + "=" + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+}
+
+function fixDate (date) {
+    var base = new Date(0);
+    var skew = base.getTime();
+    if (skew > 0)
+        date.setTime(date.getTime() - skew);
+}
+
+function rememberMe (f) {
+    var now = new Date();
+    fixDate(now);
+    now.setTime(now.getTime() + 365 * 24 * 60 * 60 * 1000);
+    setCookie('mtcmtauth', f.author.value, now, '', HOST, '');
+    setCookie('mtcmtmail', f.email.value, now, '', HOST, '');
+    setCookie('mtcmthome', f.url.value, now, '', HOST, '');
+}
+
+function forgetMe (f) {
+    deleteCookie('mtcmtmail', '', HOST);
+    deleteCookie('mtcmthome', '', HOST);
+    deleteCookie('mtcmtauth', '', HOST);
+    f.email.value = '';
+    f.author.value = '';
+    f.url.value = '';
+}
+
+function fbBut(URL) {
+	var ut = URL;
+	ut = ut.replace(/:/,'%3A'); // just one
+	ut = ut.replace(/\//g,'%2F');
+	return "//www.facebook.com/plugins/like.php?href="+ut+"&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35";
+}
+
+var gRActions = new Array();
+$(document).ready(function() {
+  $("img").removeAttr("height"); // reactive design hack
+  for (var a=0; a<gRActions.length; a++) {
+     gRActions[a]();
+  }
+});
+
+
+//-->
+</script>
+
+
+
+
+
+</head>
+
+<body>
+
+<header><div id="banner">
+<div class="bannerBox">
+<a href="http://www.botzilla.com/blog/">PhotoRant+<SPAN CLASS="bigOnly"> is a Botzilla Blog</SPAN></a>
+</div> <!-- bannerBox -->
+</div> <!-- banner -->
+</header>
+
+<article>
+<div CLASS="entryTitle">
+  <SPAN CLASS="entryPix">
+      <a href="http://www.botzilla.com/blog/archives/cat_nuke_em_from_orbit.html">
+     <img class="catPic" src="/bpix/Nuke Em from Orbit.jpg" alt="Nuke Em from Orbit" title="Nuke Em from Orbit" ></a>
+   
+  </SPAN><h1>Four Friends with Funny Frame Rates</h1>
+</div> <!-- entryTtitle -->
+
+
+<script src="http://www.botzilla.com/blog/js/three.js"></script>
+<div id="container741" style="margin-left: 0em;">Update your browser</div>
+
+<P>WebGL</P>
+
+<script type="text/javascript">
+    var camOrtho, scene, quadMesh, mat, rend, cont, pass0;
+    var hw, hh;
+    var width = 806;
+    var height = 300;
+    hw = width / 2.0;
+    hh = height / 2.0;
+    var spinMat = new THREE.Matrix4();
+    spinMat.makeRotationZ(0.01);
+    init();
+    animate();
+    function init() {
+	camOrtho = new THREE.OrthographicCamera(-hw,hw,hh,-hh, -100,100);
+	camOrtho.position.z = 10;
+	scene = new THREE.Scene();
+	mat = new THREE.MeshBasicMaterial( {color: 0xff4455, depthTest: false} );
+	quadMesh = new THREE.Mesh(new THREE.PlaneGeometry(1,1), mat);
+	scene.add(quadMesh);
+	scene.add(camOrtho);
+	rend = new THREE.WebGLRenderer();
+	rend.setSize(width,height);
+	rend.setClearColorHex(0x00, 1);
+	rend.autoClear = false;
+	cont = document.getElementById('container741');
+	cont.appendChild(rend.domElement);
+	// window.addEventListener('resize', onWindowResize, false);
+    }
+    // function onWindowResize() {
+    // }
+    function animate() {
+	requestAnimationFrame(animate);
+	render();
+    }
+    function render() {
+	var time = Date.now() * 0.001;
+	var cx = Math.cos(time)*0.1+0.9;
+	cx = cx*cx*0.5+0.5;
+	quadMesh.applyMatrix(spinMat);
+	quadMesh.scale.set(width,height,1);
+	rend.setViewport(0,0,width,height);
+	rend.clear();
+	rend.render(scene,camOrtho); // ??
+    }
+
+</script>
+
+<P>After script</P>
+
+
+
+
+
+<a name="more"></a>
+
+
+</article>
+
+<span class="posted"><!-- December 26, 2012 04:44 PM -->
+
+<br clear="right" /></span>
+
+<div CLASS="socials">
+<!-- Place this tag where you want the +1 button to render -->
+<g:plusone annotation="inline" width="80" href="http://www.botzilla.com/blog/archives/000754.html"></g:plusone>
+
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+<script type="IN/Share" data-url="http://www.botzilla.com/blog/archives/000754.html"></script>
+
+<script type="text/javascript">
+	document.write('<iframe src="' + fbBut("http://www.botzilla.com/blog/archives/000754.html") +'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:350px; height:24px;" allowTransparency="true"></iframe>');
+	</script>
+
+</div> <!-- socials -->
+
+
+<!-- BOTTOM DATE -->
+
+<p><i>December 26, 2012</i></p>
+
+<!-- BOTTOM NAVIGATION MENU  -->
+
+<nav>
+<div id="menu">
+<a href="http://www.botzilla.com/blog/archives/000752.html">&laquo; Prev<SPAN CLASS="bigOnly">: <i>A Missing Holiday</i></SPAN></a>
+<SPAN CLASS="bigOnly">&laquo;</SPAN> |
+
+<a href="http://www.botzilla.com/blog/">Current</a> |
+<SPAN CLASS="bigOnly"><a href="http://www.botzilla.com/blog/index.xml" title="Subscribe">RSS</a> |</SPAN>
+<a href="http://www.botzilla.com/blog/archives.html"><SPAN CLASS="bigOnly">Links+</SPAN>Archives</a>
+
+
+</div> <!-- menu --></nav>
+
+
+<div class="comments-head"><a name="comments"></a>Comments on "Four Friends with Funny Frame Rates"</div>
+
+
+
+
+
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-4450500-1";
+urchinTracker();
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>Soundslides Embed Code Generator</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    
+    <link rel="stylesheet" href="embed.css">
+
+    <!-- CSS Script for embedded Soundslides player -->
+    <style type="text/css">
+        .embed-container {
+            position: relative;
+            overflow: hidden;
+            /* To maintain a 4/3 aspect ratio use 75% for the padding-bottom value below To maintain a 16/9 aspect ratio change to 56.25% */
+            padding-bottom: 56.25%;
+        }
+        
+        .embed-container iframe,
+        .embed-container object,
+        .embed-container embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    
+    <div class="container">
+      <!-- player preview -->
+      <div class="row">
+        <div class="col-lg-12 player-preview"></div>
+      </div>
+      <!-- embed code -->
+      <div class="row embed">
+        <div class="col-lg-12">
+          <p class="tip">ADD THIS EMBED CODE TO YOUR PAGE</p>
+          <label for="embed-code">Embed:</label>
+          <textarea id="embed-code" name="embed-code" class="embed-code" onclick="this.focus();this.select()" readonly="readonly" rows="1"></textarea>
+        </div>
+      </div>
+      <div class="row settings">
+        <form name="embedSettingsFrom">
+          <!-- embed size -->
+          <div class="col-lg-12 sizing">
+            <div class="form-group embed-dims">
+              <p>Size:</p>
+              <label for="embedWidth" class="sr-only">Embed Width</label>
+              <input id="embedWidth" name="embedWidth" class="embed-width" type="text" value="1280">
+              <span class="by">x</span>
+              <label for="embedHeight" class="sr-only">Embed Height</label>
+              <input id="embedHeight" name="embedHeight" class="embed-height" type="text" value="720">
+            </div>
+            <div class="form-group responsive">
+              <label for="responsive-input" class="">Responsive:</label>
+              <div class="toggle-slider responsive-slider active">
+                <p class="on">ON</p>
+                <p class="off">OFF</p>
+                <div class="slide"></div>
+                <input id="responsive-input" name="responsive-input" class="responsive-input" type="checkbox" checked="checked">
+              </div>
+            </div>
+            <div class="form-group css">
+              <p class="tip">ADD THIS CSS TO YOUR PAGE'S &lt;HEAD&gt;</p>
+              <label for="responsive-css">CSS:</label>
+              <textarea id="responsive-css" name="responsive-css" class="responsive-css" onclick="this.focus();this.select()" readonly="readonly"></textarea>
+            </div>
+            <div class="bottom-border"></div>
+          </div>
+          <!-- fit settings -->
+          <div class="col-lg-12 fit">
+            <div class="form-group mode">
+              <p>Fit Mode:</p>
+              <label for="fitModeFit" class="fit-mode active">Fit</label>
+              <input id="fitModeFit" name="fitMode" type="radio" value="fit" checked="checked">
+              <label for="fitModeFill" class="fit-mode">Fill</label>
+              <input id="fitModeFill" name="fitMode" type="radio" value="fill">
+              <label for="fitModeWidth" class="fit-mode">Width</label>
+              <input id="fitModeWidth" name="fitMode" type="radio" value="width">
+              <label for="fitModeHeight" class="fit-mode">Height</label>
+              <input id="fitModeHeight" name="fitMode" type="radio" value="height">
+            </div>
+            <div class="form-group upscale">
+              <p>Fit Upscale:</p>
+              <div class="toggle-slider upscale-slider">
+                <p class="on">ON</p>
+                <p class="off">OFF</p>
+                <div class="slide"></div>
+                <label for="fitUpscale" class="sr-only">Upscale?</label>
+                <input id="fitUpscale" name="fitUpscale" class="fit-upscale-input" type="checkbox">
+              </div>
+            </div>
+            <div class="bottom-border"></div>
+          </div>
+          <!-- thumbnail selector -->
+          <div class="col-lg-12 poster">
+            <div class="form-group">
+              <p>Select a Thumbnail:</p>
+              <div class="scroller-container">
+                <img class="left-arrow">
+                <img class="right-arrow">
+                <div class="scroller">
+                  
+                </div>
+              </div>
+            </div>
+            <div class="bottom-border"></div>
+          </div>
+          <!-- headline & big play -->
+          <div class="col-lg-12 headline-play">
+            <div class="form-group headline">
+              <label for="headline-input">Headline:</label>
+              <div class="toggle-slider headline-slider active">
+                <p class="on">ON</p>
+                <p class="off">OFF</p>
+                <div class="slide"></div>
+                <input id="headline-input" name="headline-input" class="headline-input" type="checkbox" checked="checked">
+              </div>
+            </div>
+            <div class="form-group play">
+              <label for="big-play-input">Big Play:</label>
+              <div class="toggle-slider big-play-slider active">
+                <p class="on">ON</p>
+                <p class="off">OFF</p>
+                <div class="slide"></div>
+                <input id="big-play-input" name="big-play-input" class="big-play-input" type="checkbox" checked="checked">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+       
+
+    <script src="embed.js"></script>
+  </body>
+</html>
